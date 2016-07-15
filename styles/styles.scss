@@ -1,0 +1,9 @@
+@import 'blog/variables';
+
+// Import vanila bootstrap-sass
+$icon-font-path: '~bootstrap-sass/assets/fonts/bootstrap/';
+
+@import '~bootstrap-sass/assets/stylesheets/bootstrap';
+
+@import 'blog/navs';
+@import 'blog/style';

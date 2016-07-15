@@ -1,0 +1,95 @@
+/*
+  color: #9792E3;
+  color: #48435C;
+  color: #6E2C8C;
+*/
+body {
+  color: rgb(66,66,66);
+}
+h1,h2,h3,h4,h5,h6 {
+  color: #371845;
+}
+a {
+  /*color: rgb(42,93,173);*/
+  color: #6E2C8C;
+  text-decoration: none;
+}
+a:focus,
+a:hover {
+  text-decoration: underline;
+}
+blockquote {
+  line-height: 1.666;
+  font-size: 0.8em;
+  padding-left: 16.875px;
+  background: #f9f9f9;
+  border-left: 3px solid #6B4E78;
+  margin-left: 10.875px;
+  margin-right: 0;
+  padding: 1.5em 1.5em 1px;
+}
+
+figure {
+  text-align: center;
+}
+figure img {
+  margin-bottom: 0
+}
+
+figcaption {
+  border-bottom: 1px solid #6B4E78;
+  color: #6B4E78;
+  display: inline-block;
+  font-size: 0.81333em;
+  max-width: 80%;
+  padding: 0 0.813333em;
+}
+
+.main-blog-summary{
+  font-size: 14px;
+  line-height: 150%;
+  color: #09091a;
+  font-family: 'Helvetica';
+}
+.main-blog-title {
+  font-size:  23px;
+  font-weight: 800;
+  font-family: 'ClanPro-CondBook', sans-serif;
+  color: #444;
+  margin: 20px 0;
+}
+body li {
+  list-style-type: none;
+}
+
+@media screen and (max-width: 600px) {
+  html {
+    font-size: 0.813333em;
+    line-height: 1.5;
+  }
+  body {
+    font-size: 1.5em;
+  }
+}
+
+@font-face {
+  font-family: 'Helvetica';
+  src: url('/font/Helvetica/Helvetica-Bold.eot'); /* IE9 Compat Modes */
+  src: url('/font/Helvetica/Helvetica-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/font/Helvetica/Helvetica-Bold.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/font/Helvetica/Helvetica-Bold.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/font/Helvetica/Helvetica-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/font/Helvetica/Helvetica-Bold.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'ClanPro-CondBook';
+  src: url('/font/ClanPro-CondBook/clanpro-bold.eot'); /* IE9 Compat Modes */
+  src: url('/font/ClanPro-CondBook/clanpro-bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/font/ClanPro-CondBook/clanpro-bold.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/font/ClanPro-CondBook/clanpro-bold.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/font/ClanPro-CondBook/clanpro-bold.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/font/ClanPro-CondBook/clanpro-bold.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+

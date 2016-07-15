@@ -1,0 +1,11 @@
+.navbar-default .navbar-brand {
+  color: $nav-bar-top-color;
+}
+.navbar-default .navbar-nav > li > a {
+  color: $nav-bar-top-color;
+}
+.navbar-default {
+  background: $nav-bar-top-background;
+  border: none;
+  border-radius: 0;
+}
