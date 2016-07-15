@@ -13,6 +13,7 @@ class BlogIndex extends Component {
   render () {
     // Sorted pages.
     let img = ''
+    let author = ''
     const pages = this.props.route.pages.filter((page) => page.data.layout === 'post')
     const pageLinks = sortBy(pages, (page) => access(page, 'data.date')
 
@@ -20,6 +21,7 @@ class BlogIndex extends Component {
       if (access(page, 'file.ext') === 'md') {
         const title = access(page, 'data.title') || page.path
         img = (page.data.link !== undefined && page.data.link !== '') ? <img src={page.data.link} /> : ''
+        author = (page.data.author !== undefined && page.data.author !== '') ? `By ${page.data.author}` : ''
         return (
         <li key={page.path} style={{
   marginBottom: rhythm(1 / 4),
@@ -34,7 +36,9 @@ class BlogIndex extends Component {
                 </div>
                 <div className='main-blog-summary'>
                   {page.data.summary}
-                  {page.data.author}
+                  <div className='frame-blog-author'>
+                    {author}
+                  </div>
                   <PostInfo />
                 </div>
               </div>

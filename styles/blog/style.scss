@@ -49,6 +49,23 @@
   font-size: 0.75rem;
   text-align: right;
   margin-right: 150px;
-
+}
+.frame-blog-author {
+  font-style: italic;
+  font-family: 'Winterthur' Sans Serif;
+  color: #9E9E9E;
+  margin-top: 20px;
+}
+.frame-sample-post {
+  border: 2px solid #f09340;
 }
 
+@font-face {
+  font-family: 'Winterthur';
+  src: url('/font/Winterthur/Winterthur.eot'); /* IE9 Compat Modes */
+  src: url('/font/Winterthur/Winterthur.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+       url('/font/Winterthur/Winterthur.woff2') format('woff2'), /* Super Modern Browsers */
+       url('/font/Winterthur/Winterthur.woff') format('woff'), /* Pretty Modern Browsers */
+       url('/font/Winterthur/Winterthur.ttf')  format('truetype'), /* Safari, Android, iOS */
+       url('/font/Winterthur/Winterthur.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
