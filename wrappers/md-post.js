@@ -23,7 +23,7 @@ export default ({
         }}
       >
         Posted {pathToDate(path)}
-      </em>
+      </em> 
       <div dangerouslySetInnerHTML={{__html: post.body}} />
       <hr
         style={{

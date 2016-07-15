@@ -73,11 +73,7 @@ class Template extends Component {
             textAlign: 'right',
           }}
         >
-          <span>
-            Content licensed under <a
-              href="#"
-            >Streeming</a>
-          </span>
+         
         </footer>
       </Container>
     )

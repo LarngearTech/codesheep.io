@@ -14,10 +14,10 @@ class MarkdownWrapper extends Component {
     if (layout === 'post') {
       return (
       <div className='md-post'>
-        <div className='col-lg-10'>
+        <div className='col-lg-9'>
           <Post {...{post, path, route}} />
         </div>
-        <div className='col-lg-2'>
+        <div className='col-lg-3'>
           <RightBarPost />
         </div>
       </div>)
