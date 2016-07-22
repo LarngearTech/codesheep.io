@@ -2,3 +2,4 @@ node_modules/
 public
 pages/2016-05-10-reading-list
 pages/2016-05-11-reinstall-daggumnpm
+.gatsby-context.js
