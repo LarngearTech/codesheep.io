@@ -72,24 +72,24 @@ body li {
   }
 }
 
-@font-face {
+/*@font-face {
   font-family: 'Helvetica';
-  src: url('/font/Helvetica/Helvetica-Bold.eot'); /* IE9 Compat Modes */
-  src: url('/font/Helvetica/Helvetica-Bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('/font/Helvetica/Helvetica-Bold.woff2') format('woff2'), /* Super Modern Browsers */
-       url('/font/Helvetica/Helvetica-Bold.woff') format('woff'), /* Pretty Modern Browsers */
-       url('/font/Helvetica/Helvetica-Bold.ttf')  format('truetype'), /* Safari, Android, iOS */
-       url('/font/Helvetica/Helvetica-Bold.svg#svgFontName') format('svg'); /* Legacy iOS */
-}
+  src: url('/font/Helvetica/Helvetica-Bold.eot'); 
+  src: url('/font/Helvetica/Helvetica-Bold.eot?#iefix') format('embedded-opentype'),
+       url('/font/Helvetica/Helvetica-Bold.woff2') format('woff2'),
+       url('/font/Helvetica/Helvetica-Bold.woff') format('woff'),
+       url('/font/Helvetica/Helvetica-Bold.ttf')  format('truetype'), 
+       url('/font/Helvetica/Helvetica-Bold.svg#svgFontName') format('svg'); 
+}*/
 
-@font-face {
+/*@font-face {
   font-family: 'ClanPro-CondBook';
-  src: url('/font/ClanPro-CondBook/clanpro-bold.eot'); /* IE9 Compat Modes */
-  src: url('/font/ClanPro-CondBook/clanpro-bold.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-       url('/font/ClanPro-CondBook/clanpro-bold.woff2') format('woff2'), /* Super Modern Browsers */
-       url('/font/ClanPro-CondBook/clanpro-bold.woff') format('woff'), /* Pretty Modern Browsers */
-       url('/font/ClanPro-CondBook/clanpro-bold.ttf')  format('truetype'), /* Safari, Android, iOS */
-       url('/font/ClanPro-CondBook/clanpro-bold.svg#svgFontName') format('svg'); /* Legacy iOS */
-}
+  src: url('/font/ClanPro-CondBook/clanpro-bold.eot');
+  src: url('/font/ClanPro-CondBook/clanpro-bold.eot?#iefix') format('embedded-opentype'), 
+       url('/font/ClanPro-CondBook/clanpro-bold.woff2') format('woff2'), 
+       url('/font/ClanPro-CondBook/clanpro-bold.woff') format('woff'),
+       url('/font/ClanPro-CondBook/clanpro-bold.ttf')  format('truetype'), 
+       url('/font/ClanPro-CondBook/clanpro-bold.svg#svgFontName') format('svg');
+}*/
 
 

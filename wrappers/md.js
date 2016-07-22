@@ -18,7 +18,7 @@ class MarkdownWrapper extends Component {
           <Post {...{post, path, route}} />
         </div>
         <div className='col-lg-3'>
-          <RightBarPost />
+          <RightBarPost {...{post, path, route}} />
         </div>
       </div>)
     } else if (layout === 'page') {

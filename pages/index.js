@@ -20,7 +20,7 @@ class BlogIndex extends Component {
     ).reverse().map((page) => {
       if (access(page, 'file.ext') === 'md') {
         const title = access(page, 'data.title') || page.path
-        img = (page.data.link !== undefined && page.data.link !== '') ? <img src={page.data.link} /> : ''
+        img = (page.data.img !== undefined && page.data.img !== '') ? <img src={page.data.img} /> : ''
         author = (page.data.author !== undefined && page.data.author !== '') ? `By ${page.data.author}` : ''
         return (
         <li key={page.path} style={{
