@@ -37,13 +37,6 @@
 .post-info {
   margin-top: $margin-top-two;
 }
-.frame-right-bar-post {
-    // border-left: 1px solid #eaeaea;
-    // height: 80%;
-    // position: fixed;
-    // right: 0;
-    // width: 300px;
-}
 .footer-template {
   color: #999;
   font-size: 0.75rem;
@@ -63,12 +56,6 @@
   padding: 10px 0;
   font-weight: 100;
   font-family: sans-serif;
-}
-.recent-posts-title {
-  // color: #fff;
-}
-.recent-posts {
-  // background: #ef9340;
 }
 .load-recent-posts-header img {
   margin-bottom: 0;
@@ -97,6 +84,9 @@
   color: #fff;
   background: #333;
   transition-delay: 0.1s;
+}
+@media (max-width: 750px) {
+  
 }
 
 @font-face {
