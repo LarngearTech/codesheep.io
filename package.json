@@ -53,5 +53,17 @@
     "gatsby": "^0.10.0",
     "react-sidenav": "^1.0.4",
     "react-transform-catch-errors": "^1.0.0"
+  },
+  "gh-pages-deploy": {
+    "staticpath": "dist",
+    "cname": "codesheep.io",
+    "prep": [
+      "build-sass",
+      "optimize-img"
+    ],
+    "post": [
+      "clean-source"
+    ],
+    "noprompt": false
   }
 }

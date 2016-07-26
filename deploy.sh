@@ -4,13 +4,13 @@
 # branch. This is a destructive action.
 #
 
-git checkout -b gh-pages
+git checkout -b tmp-build
 gatsby build
 cp CNAME public/CNAME
 git add public -f
-git commit -m 'gatsby auto build to branch gh-pages'
-git push origin :master
-git subtree push --prefix public origin master
+git commit -m 'build'
+git push origin --delete gh-pages
+git subtree push --prefix public origin gh-pages
 git checkout master
-git branch -D gh-pages
+git branch -D tmp-build
 
