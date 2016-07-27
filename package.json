@@ -58,8 +58,6 @@
     "staticpath": "dist",
     "cname": "codesheep.io",
     "prep": [
-      "build-sass",
-      "optimize-img"
     ],
     "post": [
       "clean-source"
