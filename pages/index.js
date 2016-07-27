@@ -30,19 +30,23 @@ class BlogIndex extends Component {
             <div className='frame-blog-content'>
               <Link to={prefixLink(page.path)}>
               {img}
+              </Link>
               <div className='frame-blog-content-detail'>
+                <Link to={prefixLink(page.path)}>
                 <div className='main-blog-title'>
                   {title}
                 </div>
+                </Link>
                 <div className='main-blog-summary'>
+                  <Link to={prefixLink(page.path)}>
                   {page.data.summary}
                   <div className='frame-blog-author'>
                     {author}
                   </div>
+                  </Link>
                   <PostInfo />
                 </div>
               </div>
-              </Link>
             </div>
           </div>
         </li>
