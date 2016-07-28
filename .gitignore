@@ -1,5 +1,4 @@
 node_modules/
 public
+npm-debug.log
 .gatsby-context.js
-pages/2016-05-10-reading-list
-pages/2016-05-11-reinstall-daggumnpm
