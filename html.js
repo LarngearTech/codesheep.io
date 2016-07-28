@@ -33,6 +33,7 @@ export default class Html extends Component {
       <TypographyStyle/>
       <link rel="stylesheet" href={prefixLink('/bootstrap/css/bootstrap.min.css')} />
       {cssLink}
+      
     </head>
     <body className="landing-page">
       <div id="react-mount" dangerouslySetInnerHTML={{__html: body}} />
@@ -41,7 +42,7 @@ export default class Html extends Component {
       <script dangerouslySetInnerHTML={{ __html: "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=" +
     'i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElement' +
     'sByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,' +
-    "'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-37699943-1" +
+    "'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-81455356-1" +
     "', 'auto');ga('send', 'pageview');</script>",
 }}></script>
       {/* eslint-enable */}
