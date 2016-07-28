@@ -85,6 +85,17 @@
   background: #333;
   transition-delay: 0.1s;
 }
+a-code {
+  // color: #3366b7;
+  color: #f48024;
+  font-weight: 400;
+}
+.navbar-brand:hover {
+  color: #fff !important;
+}
+.navbar-brand {
+  font-weight: 700;
+}
 @media (max-width: 750px) {
   
 }

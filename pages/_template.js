@@ -62,7 +62,6 @@ class Template extends Component {
       >
       <NavTopBar />
         <div className='template-header-blog'>
-        
         </div>
         {children}
         <footer
