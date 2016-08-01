@@ -10,7 +10,7 @@ export default class PostRightBarShare extends Component {
       <FacebookShareButton url={`www.codesheep.io/${this.props.url}`}>
         <div className="btn-group" style={{width: '100%', cursor: 'pointer'}}>
           <a className='btn btn-primary disabled'><i className="fa fa-facebook" style={{width: '20%'}}></i></a>
-          <a className='btn btn-primary ' href='' style={{width: '80%'}}>แชร์</a>
+          <a className='btn btn-primary ' href='' style={{width: '80%'}}>Share</a>
         </div>
       </FacebookShareButton>
     </div>
