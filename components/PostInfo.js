@@ -7,7 +7,7 @@ export default class PostInfo extends Component {
     const {FacebookShareCount} = ShareCounts
     return (
     <div className='post-info'>
-      <FacebookShareButton url='www.codesheep.io'>
+      <FacebookShareButton url={`www.codesheep.io/${this.props.url}`}>
         <a className='post-info-tag-a' href="javascript:void(0)"><i className="fa fa-facebook"></i></a>
       </FacebookShareButton>
     </div>

@@ -26,6 +26,13 @@ export default class Html extends Component {
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta property="og:title" content="CodeSheep.io - 2016" />
+      <meta property="og:type" content="website" />
+      <meta property="og:url" content="http://codesheep.io/" />
+      <meta property="og:image" content="" />
+      <meta property="og:site_name" content="CodeSheep" />
+      <meta property="og:description" content="CodeSheep.io"/>
+      <meta property="fb:app_id" content="1805086963105739" />
       <title>
         {this.props.title}
       </title>
