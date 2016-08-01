@@ -44,7 +44,7 @@ class BlogIndex extends Component {
                     {author}
                   </div>
                   </Link>
-                  <PostInfo />
+                  <PostInfo url={prefixLink(page.path)} />
                 </div>
               </div>
             </div>
