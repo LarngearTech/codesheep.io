@@ -1,13 +1,16 @@
 import React , { Component } from 'react'
+import { ShareButtons, ShareCounts, generateShareIcon } from 'react-share'
 
 export default class PostInfo extends Component {
   render () {
+    const {FacebookShareButton} = ShareButtons
+    const {FacebookShareCount} = ShareCounts
     return (
     <div className='post-info'>
-      <a className='post-info-tag-a' href="javascript:void(0)"><i className="fa fa-comment-o"></i></a>
-      <a className='post-info-tag-a'  href="javascript:void(0)"><i className="fa fa-share-alt"></i></a>
+      <FacebookShareButton url='www.codesheep.io'>
+        <a className='post-info-tag-a' href="javascript:void(0)"><i className="fa fa-facebook"></i></a>
+      </FacebookShareButton>
     </div>
     )
   }
 }
- 
