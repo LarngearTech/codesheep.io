@@ -26,7 +26,7 @@ export default class NavTopBar extends Component {
                 <span className="icon-bar"></span>
               </button>
               <Link to={prefixLink('/')}>
-              <a className="navbar-brand" href="#"><a-code className="navbar-brand-code" >Code</a-code>Sheep</a>
+              <a className="navbar-brand" href="#"><img style={{ "height": "33px", "margin-top": "-6px"}} src="http://www.mx7.com/i/deb/JMmnMG.png" /></a>
               </Link>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
