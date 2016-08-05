@@ -1,9 +1,9 @@
 ---
 layout: post
-title: Books of 2015
+title: "Books of 2015"
 tags:
 - reading list
-summary: 2016 was not “the Year of the Book” for me. Instead I moved into a new house, changed companies, and my wife and I had had our second child.
+summary: "2016 was not “the Year of the Book” for me. Instead I moved into a new house, changed companies, and my wife and I had had our second child."
 img: "https://eng.uber.com/wp-content/uploads/2016/06/Fraud_Prevention_Header.png"
 ---
 
