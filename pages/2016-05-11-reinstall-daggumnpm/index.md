@@ -3,9 +3,9 @@ layout: post
 title: "reinstall: a better `daggumnpm`"
 tags:
 - bash
-summary: while fun, had a few rough edges. My workflow often involves running `daggumnpm` in a tmux session and working on something else while npm does it’s thing.
+summary: "while fun, had a few rough edges. My workflow often involves running `daggumnpm` in a tmux session and working on something else while npm does it’s thing."
 img: "https://eng.uber.com/wp-content/uploads/2016/07/Xchange_Leasing_header.png"
-author: Supasate Choochaisri
+author: "Supasate Choochaisri"
 ---
 
 [`daggumnpm`](/2016/02/18/daggumnpm/), while fun, had a few rough edges. My
