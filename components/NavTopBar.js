@@ -12,7 +12,7 @@ export default class NavTopBar extends Component {
       <div className='nav-top-bar'>
         <nav className="navbar navbar-default">
           <div className="container">
-            <div className="navbar-header">
+            <div className="navbar-header" style={{ 'height': '70px'}}>
               <button
                 type="button"
                 className="navbar-toggle collapsed"
@@ -26,7 +26,7 @@ export default class NavTopBar extends Component {
                 <span className="icon-bar"></span>
               </button>
               <Link to={prefixLink('/')}>
-              <a className="navbar-brand" href="#"><img style={{ "height": "33px", "margin-top": "-6px"}} src="http://www.mx7.com/i/deb/JMmnMG.png" /></a>
+              <a className="navbar-brand" href="#"><img style={{ "height": "45px", "margin-top": "-3px"}} src="http://www.mx7.com/i/e01/uAmpPO.png" /></a>
               </Link>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
