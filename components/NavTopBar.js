@@ -2,7 +2,6 @@ import React, {Component} from 'react'
 import Headroom from 'react-headroom'
 import {Link} from 'react-router'
 import {prefixLink} from 'gatsby-helpers'
-import logo from 
 
 export default class NavTopBar extends Component {
 
