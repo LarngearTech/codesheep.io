@@ -72,7 +72,6 @@ class Template extends Component {
             textAlign: 'right',
           }}
         >
-         
         </footer>
       </Container>
     )

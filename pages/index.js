@@ -1,12 +1,12 @@
-import React, { Component, PropTypes } from 'react'
-import { Link } from 'react-router'
+import React, {Component, PropTypes} from 'react'
+import {Link} from 'react-router'
 import sortBy from 'lodash/sortBy'
 import DocumentTitle from 'react-document-title'
-import { prefixLink } from 'gatsby-helpers'
-import { rhythm } from 'utils/typography'
-import { pathToDate } from 'utils'
+import {prefixLink} from 'gatsby-helpers'
+import {rhythm} from 'utils/typography'
+import {pathToDat} from 'utils'
 import access from 'safe-access'
-import { config } from 'config'
+import {config} from 'config'
 import PostInfo from '../components/PostInfo'
 
 class BlogIndex extends Component {
