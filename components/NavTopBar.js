@@ -1,8 +1,7 @@
-import React, { Component } from 'react'
+import React, {Component} from 'react'
 import Headroom from 'react-headroom'
-import $ from 'jquery'
-import { Link } from 'react-router'
-import { prefixLink } from 'gatsby-helpers'
+import {Link} from 'react-router'
+import {prefixLink} from 'gatsby-helpers'
 
 export default class NavTopBar extends Component {
 
@@ -26,7 +25,7 @@ export default class NavTopBar extends Component {
                 <span className="icon-bar"></span>
               </button>
               <Link to={prefixLink('/')}>
-              <a className="navbar-brand" href="#"><img style={{ "height": "45px", "margin-top": "-3px"}} src="http://www.mx7.com/i/e01/uAmpPO.png" /></a>
+              <a className="navbar-brand" href="#"><img style={{"height": "45px", "margin-top": "-3px"}} src="http://www.mx7.com/i/c89/SOeKWr.png" /></a>
               </Link>
             </div>
             <div id="navbar" className="navbar-collapse collapse">
