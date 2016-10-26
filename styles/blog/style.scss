@@ -4,6 +4,10 @@
 h1, h2, h3, h4, h5, h6, .main-blog-title {
   font-family: 'rsu' !important;
 }
+body {
+  font-size: 20px;
+  line-height: 1.8;
+}
 .template-header-blog {
   margin-top: $margin-top-one;
 }
@@ -13,7 +17,7 @@ h1, h2, h3, h4, h5, h6, .main-blog-title {
 .frame-blog-content-detail {
   padding: $padding-all-not-top-one;
 }
-.frame-blog-content img { 
+.frame-blog-content img {
   width: 100%;
   display: block;
   background-size: cover;
@@ -103,7 +107,7 @@ a-code {
   font-weight: 700;
 }
 @media (max-width: 750px) {
-  
+
 }
 
 @font-face {

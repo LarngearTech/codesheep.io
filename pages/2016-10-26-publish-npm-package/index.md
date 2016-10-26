@@ -9,7 +9,7 @@ author: "Supasate Choochaisri"
 
 เชื่อว่าทุกคนที่ใช้ Node.js ต้องมีการติดตั้ง node package ผ่านคำสั่ง npm install กันเป็นประจำอยู่แล้วใช่มั้ยครับ (หรือไม่ก็ใช้ [yarn](https://github.com/yarnpkg/yarn) กันแทนแล้ว) ในบทความนี้เราจะเปลี่ยนจากบทบาทผู้บริโภค package มาเป็นผู้ผลิต package กันบ้างครับ โดยจะพูดถึงวิธีการนำ npm package ของตัวเองขึ้นไปยัง npmjs.com เพื่อให้คนอื่นเรียกใช้ package ของเราได้ ซึ่งวิธีการนั้นง่ายกว่าที่หลายคนคิดกันมากๆ ลองมาทำกันดูนะครับ
 
-### ขั้นที่ 0 เตรียม package
+## ขั้นที่ 0 เตรียม package
 สมมติว่าผมมี package ชื่อ `hello-by-supasate` ที่อยากจะ publish ขึ้น npmjs.com โครงสร้าง folder ผมหน้าตาแบบนี้
 
 ``` javascript
@@ -82,7 +82,7 @@ console.log(hello('World')) // แสดง 'Hello World'
 เมื่อ package เราพร้อมให้คนอื่นเรียกใช้แล้ว เราก็มาทำการ publish package ของเรากันเลยครับ
 
 
-### ขั้นที่ 1 สร้าง account
+## ขั้นที่ 1 สร้าง account
 สร้าง account บนเว็บ npmjs.com โดย username ที่เลือกจะนำไปใช้กับ profile บน npmjs.com  ของเรา (เช่น ของผมจะเป็น www.npmjs.com/~supasate)
 
 หรือถ้าใครขี้เกียจสมัครผ่านเว็บก็สมัครผ่าน command line ได้เลย โดยใช้คำสั่ง `npm adduser` และระบุ username, password, email พอสร้างเสร็จด้วยวิธีนี้เสร็จแล้วจะ log in เข้าสู่ระบบให้อัตโนมัติให้เลยแสนสบาย
@@ -96,7 +96,7 @@ Logged in as <your_username> on https://registry.npmjs.org/.
 ```
 (สังเกตบรรทัดสุดจะขึ้นว่า `Logged in as ...` แปลว่า log in สำเร็จเรียบร้อย)
 
-### ขั้นที่ 2 เข้าสู่ระบบ
+## ขั้นที่ 2 เข้าสู่ระบบ
 สำหรับคนที่ไม่ได้สร้าง account ผ่าน command line หรือเคยมี account อยู่แล้ว สามารถเข้าสู่ระบบได้ด้วยคำสั่ง `npm login`
 ```
 $ npm login
@@ -106,7 +106,7 @@ Email: (this IS public) <your_email>@<domain.com>
 Logged in as <your_username> on https://registry.npmjs.org/.
 ```
 
-### ขั้นที่ 3 publish package
+## ขั้นที่ 3 publish package
 เมื่อพร้อมแล้วก็สั่งคำสั่ง `npm publish`
 ``` bash
 $ npm publish
@@ -137,7 +137,7 @@ Hello World
 
 เป็นอันว่า package ของเราใช้งานได้เรียบร้อยครับ
 
-### ขั้นที่ 4 อัพเดท package
+## ขั้นที่ 4 อัพเดท package
 คราวนี้ถ้าเราต้องการแก้ไข package ของเราแล้วส่งอัพเดทขึ้นไปใหม่ทำยังไง
 
 สมมติว่าเราทำการแก้ไข README.md เพื่อเพิ่มวิธีการใช้งาน package เราเข้าไปและ git commit เรียบร้อยแล้ว เราสามารถสั่ง `npm version <update_type>` เพื่อเพิ่มเลขเวอร์ชั่นของเราในไฟล์ package.json และ commit ให้โดยอัตโนมัติ
