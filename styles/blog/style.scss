@@ -1,3 +1,9 @@
+.main-blog-summary, .frame-blog-author, body {
+  font-family: 'tp-sans' !important;
+}
+h1, h2, h3, h4, h5, h6, .main-blog-title {
+  font-family: 'rsu' !important;
+}
 .template-header-blog {
   margin-top: $margin-top-one;
 }
@@ -108,4 +114,24 @@ a-code {
        url('/font/Winterthur/Winterthur.woff') format('woff'), /* Pretty Modern Browsers */
        url('/font/Winterthur/Winterthur.ttf')  format('truetype'), /* Safari, Android, iOS */
        url('/font/Winterthur/Winterthur.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'rsu';
+  src: url('/font/rsu/RSU_Regular.ttf'); /* IE9 Compat Modes */
+  // src: url('/font/Winterthur/Winterthur.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  //      url('/font/Winterthur/Winterthur.woff2') format('woff2'), /* Super Modern Browsers */
+  //      url('/font/Winterthur/Winterthur.woff') format('woff'), /* Pretty Modern Browsers */
+  //      url('/font/Winterthur/Winterthur.ttf')  format('truetype'), /* Safari, Android, iOS */
+  //      url('/font/Winterthur/Winterthur.svg#svgFontName') format('svg'); /* Legacy iOS */
+}
+
+@font-face {
+  font-family: 'tp-sans';
+  src: url('/font/TP-Sans/PTC55F.ttf'); /* IE9 Compat Modes */
+  // src: url('/font/Winterthur/Winterthur.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+  //      url('/font/Winterthur/Winterthur.woff2') format('woff2'), /* Super Modern Browsers */
+  //      url('/font/Winterthur/Winterthur.woff') format('woff'), /* Pretty Modern Browsers */
+  //      url('/font/Winterthur/Winterthur.ttf')  format('truetype'), /* Safari, Android, iOS */
+  //      url('/font/Winterthur/Winterthur.svg#svgFontName') format('svg'); /* Legacy iOS */
 }
