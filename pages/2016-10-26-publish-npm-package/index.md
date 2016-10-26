@@ -4,7 +4,7 @@ title: "สร้าง npm package ขึ้น npmjs.com"
 tags:
 - bash
 summary: "while fun, had a few rough edges. My workflow often involves running `daggumnpm` in a tmux session and working on something else while npm does it’s thing."
-img: "npmjs.jpg"
+img: "https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-26-publish-npm-package/npmjs.jpg"
 author: "Supasate Choochaisri"
 ---
 
