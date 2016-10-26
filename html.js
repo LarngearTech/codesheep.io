@@ -16,7 +16,7 @@ export default class Html extends Component {
     let cssLink
     let bootstrapLink
     if (process.env.NODE_ENV === 'production') {
-      cssLink = <link rel="stylesheet" href={prefixLink('./styles.css')} />
+      cssLink = <link rel="stylesheet" href={'/styles.css'} />
     }
 
     return (
@@ -39,12 +39,11 @@ export default class Html extends Component {
       <link rel="shortcut icon" href={favicon} />
       <GoogleFont/>
       <TypographyStyle/>
-      <link rel="stylesheet" href={prefixLink('./bootstrap/css/bootstrap.min.css')} />
       {cssLink}
     </head>
     <body className="landing-page">
       <div id="react-mount" dangerouslySetInnerHTML={{__html: body}} />
-      <script src={prefixLink('./bundle.js')} />
+      <script src={'/bundle.js'} />
       {/* eslint-disable */}
       <script dangerouslySetInnerHTML={{ __html: "(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=" +
     'i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElement' +
