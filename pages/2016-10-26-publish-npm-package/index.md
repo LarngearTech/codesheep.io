@@ -1,6 +1,7 @@
 ---
 layout: post
 title: "สร้าง npm package ขึ้น npmjs.com"
+summary: "เชื่อว่าทุกคนที่ใช้ Node.js ต้องมีการติดตั้ง node package ผ่านคำสั่ง npm install กันเป็นประจำอยู่แล้วใช่มั้ยครับ (หรือไม่ก็ใช้ yarn กันแทนแล้ว) ในบทความนี้เราจะเปลี่ยนจากบทบาทผู้บริโภค package มาเป็นผู้ผลิต package กันบ้างครับ โดยจะพูดถึงวิธีการนำ npm package ของตัวเองขึ้นไปยัง npmjs.com เพื่อให้คนอื่นเรียกใช้ package ของเราได้ ซึ่งวิธีการนั้นง่ายกว่าที่หลายคนคิดกันมากๆ ลองมาทำกันดูนะครับ (อ่านต่อ)"
 tags:
 - npmjs
 img: "https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-26-publish-npm-package/npmjs.jpg"
@@ -145,9 +146,9 @@ Hello World
 โดย <update_type> สามารถกำหนดเป็นเลขเวอร์ชั่นตามแบบ [semver](http://semver.org/) ได้ (คือ MAJOR.MINOR.PATCH เช่น 1.0.1) หรือถ้าใช้เป็นคำว่า major หรือ minor หรือ patch ก็จะเพิ่มเลขรุ่นตามที่ต้องการของ semver นั้นๆให้
 
 เช่น ถ้าปัจจุบันเป็นเวอร์ชั่น version 1.0.1
-สั่ง `npm version patch` จะกลายเป็น 1.0.2
-สั่ง `npm version minor` จะกลายเป็น 1.1.0
-สั่ง `npm versoin major` จะกลายเป็น 2.0.0
+* สั่ง `npm version patch` จะกลายเป็น 1.0.2
+* สั่ง `npm version minor` จะกลายเป็น 1.1.0
+* สั่ง `npm version major` จะกลายเป็น 2.0.0
 
 พอเราเพิ่มเลขเวอร์ชันใน package.json ของเราเรียบร้อยแล้ว ให้สั่ง `npm publish` อีกครั้งเพื่ออัพเดท package ใหม่ของเราขึ้นไป
 ```
