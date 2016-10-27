@@ -1,15 +1,11 @@
-import React, {Component, PropTypes} from 'react'
+import React, { PropTypes } from 'react'
 
-class Figure extends Component {
-  render() {
-    return (
-      <figure>
-        <img {...this.props} style={{margin: 0}}/>
-        <figcaption>{this.props.caption}</figcaption>
-      </figure>
-    )
-  }
-}
+const Figure = (props) => (
+  <figure>
+    <img {...props} style={{ margin: 0 }} />
+    <figcaption>{props.caption}</figcaption>
+  </figure>
+)
 
 Figure.propTypes = {
   img: PropTypes.string.isRequired,

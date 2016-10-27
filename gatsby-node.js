@@ -1,4 +1,4 @@
-exports.loadContext = function(callback) {
+exports.loadContext = (callback) => {
   let context = require.context('./pages', true)
   if (module.hot) {
     module.hot.accept(context.id, () => {
@@ -10,7 +10,7 @@ exports.loadContext = function(callback) {
 }
 
 const parseDateParts = (pathname) => /(\d{4})-(\d{2})-(\d{2})-([^\/]*)/.exec(pathname)
-exports.rewritePath = (parsedFilePath, metadata) => {
+exports.rewritePath = (parsedFilePath) => {
   const dateParts = parseDateParts(parsedFilePath.path)
   if (dateParts) {
     return `/${dateParts[1]}/${dateParts[2]}/${dateParts[3]}/${dateParts[4]}/`

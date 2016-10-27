@@ -1,16 +1,19 @@
-import React, { Component } from 'react'
+import React, { PropTypes } from 'react'
 import RecentPosts from './RecentPosts'
 import PostRightBarShare from './PostRightBarShare'
 
-export default class RightBarPost extends Component {
-  render () {
-    return (
-    <div className='right-bar-post'>
-      <div className='frame-right-bar-post'>
-        <PostRightBarShare url={this.props.path} />
-        <RecentPosts route={this.props.route} />
-      </div>
+const RightBarPost = (props) => (
+  <div className="right-bar-post">
+    <div className="frame-right-bar-post">
+      <PostRightBarShare url={props.path} />
+      <RecentPosts route={props.route} />
     </div>
-    )
-  }
+  </div>
+)
+
+RightBarPost.propTypes = {
+  path: PropTypes.string.isRequired,
+  route: PropTypes.object.isRequired,
 }
+
+export default RightBarPost

@@ -1,59 +1,61 @@
-import React, {Component, PropTypes} from 'react'
-import {Link} from 'react-router'
+import React, { PropTypes } from 'react'
+import { Link } from 'react-router'
 import sortBy from 'lodash/sortBy'
 import DocumentTitle from 'react-document-title'
-import {prefixLink} from 'gatsby-helpers'
-import {rhythm} from 'utils/typography'
-import {pathToDat} from 'utils'
+import { prefixLink } from 'gatsby-helpers'
+import { rhythm } from 'utils/typography'
 import access from 'safe-access'
-import {config} from 'config'
+import { config } from 'config'
 import PostInfo from '../components/PostInfo'
 
-class BlogIndex extends Component {
-  render () {
-    // Sorted pages.
-    let img = ''
-    let author = ''
-    const pages = this.props.route.pages.filter((page) => page.data.layout === 'post')
-    const pageLinks = sortBy(pages, (page) => access(page, 'data.date')
-
-    ).reverse().map((page) => {
+const BlogIndex = (props) => {
+  // Sorted pages.
+  let img = ''
+  let author = ''
+  const pages = props.route.pages.filter((page) => page.data.layout === 'post')
+  const pageLinks = sortBy(pages, (page) =>
+    access(page, 'data.date'))
+    .reverse()
+    .map((page) => {
       if (access(page, 'file.ext') === 'md') {
         const title = access(page, 'data.title') || page.path
-        img = (page.data.img !== undefined && page.data.img !== '') ? <img src={page.data.img} /> : ''
-        author = (page.data.author !== undefined && page.data.author !== '') ? `By ${page.data.author}` : ''
+        img = (page.data.img !== undefined && page.data.img !== '') ?
+          <img src={page.data.img} /> : ''
+        author = (page.data.author !== undefined && page.data.author !== '') ?
+          `By ${page.data.author}` : ''
+
         return (
-        <li key={page.path} style={{
-  marginBottom: rhythm(1 / 4),
-}}>
-          <div className='col-lg-10 col-centered'>
-            <div className='frame-blog-content'>
-              <Link to={prefixLink(page.path)}>
-              {img}
-              </Link>
-              <div className='frame-blog-content-detail'>
+          <li key={page.path} style={{ marginBottom: rhythm(1 / 4) }}>
+            <div className="col-lg-10 col-centered">
+              <div className="frame-blog-content">
                 <Link to={prefixLink(page.path)}>
-                <div className='main-blog-title'>
-                  {title}
-                </div>
+                {img}
                 </Link>
-                <div className='main-blog-summary'>
+                <div className="frame-blog-content-detail">
                   <Link to={prefixLink(page.path)}>
-                  {page.data.summary}
-                  <div className='frame-blog-author'>
-                    {author}
+                  <div className="main-blog-title">
+                    {title}
                   </div>
                   </Link>
-                  <PostInfo url={prefixLink(page.path)} />
+                  <div className="main-blog-summary">
+                    <Link to={prefixLink(page.path)}>
+                    {page.data.summary}
+                    <div className="frame-blog-author">
+                      {author}
+                    </div>
+                    </Link>
+                    <PostInfo url={prefixLink(page.path)} />
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </li>
+          </li>
         )
       }
+      return null
     })
-    return (
+
+  return (
     <DocumentTitle title={config.blogTitle}>
       <div>
         <ul>
@@ -61,8 +63,7 @@ class BlogIndex extends Component {
         </ul>
       </div>
     </DocumentTitle>
-    )
-  }
+  )
 }
 
 BlogIndex.propTypes = {
