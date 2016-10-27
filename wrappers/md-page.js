@@ -12,12 +12,11 @@ const Page = ({ post }) => (
       <hr style={{ marginBottom: rhythm(2) }} />
       <div>
         <img
-          src={prefixLink('/codesheep.jpg')}
+          src={prefixLink('/images/sheep.png')}
           style={{
             border: '1px solid #fff',
             boxShadow: '0 0 2px rgba(0, 0, 0, 0.125)',
             float: 'left',
-            transform: 'rotate(90deg)',
             marginTop: rhythm(1 / 3),
             width: rhythm(2.5),
           }}

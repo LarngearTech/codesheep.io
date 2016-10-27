@@ -8,9 +8,9 @@ const PostRightBarShare = (props) => {
     <FacebookShareButton url={`www.codesheep.io/${props.url}`}>
       <div className="btn-group" style={{ width: '100%', cursor: 'pointer' }}>
         <a className="btn btn-primary disabled">
-          <i className="fa fa-facebook" style={{ width: '20%' }}></i>
+          <i className="fa fa-facebook"></i>
         </a>
-        <a className="btn btn-primary" style={{ width: '80%' }}>Share</a>
+        <a className="btn btn-primary">Share</a>
       </div>
     </FacebookShareButton>
   </div>
