@@ -23,7 +23,7 @@ const NavTopBar = () => (
               <span className="icon-bar"></span>
             </button>
             <Link to={prefixLink('/')}>
-            <a className="navbar-brand" href="#"><img style={{ height: '45px', marginTop: '-3px' }} src="http://www.mx7.com/i/c89/SOeKWr.png" /></a>
+            <a className="navbar-brand" href="#"><img style={{ height: '45px', marginTop: '-3px' }} src={prefixLink('/images/logo.png')} /></a>
             </Link>
           </div>
           <div id="navbar" className="navbar-collapse collapse">
