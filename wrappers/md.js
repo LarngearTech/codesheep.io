@@ -13,10 +13,10 @@ const MarkdownWrapper = (props) => {
   if (layout === 'post') {
     return (
       <div className="md-post">
-        <div className="col-lg-9">
+        <div className="col-lg-9 col-md-9">
           <Post {...{ post, path, route }} />
         </div>
-        <div className="col-lg-3">
+        <div className="col-lg-3 col-md-3">
           <RightBarPost {...{ post, path, route }} />
         </div>
       </div>
