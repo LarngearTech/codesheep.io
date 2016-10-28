@@ -1,3 +1,4 @@
+#configures the blog
 blogTitle = "CodeSheep Blog"
 authorName = "CodeSheep"
 linkPrefix = "/"
