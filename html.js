@@ -13,9 +13,9 @@ const Html = (props) => {
   if (process.env.NODE_ENV === 'production') {
     cssLink = <link rel="stylesheet" href={'/styles.css'} />
   }
-  const img = props.routes[1].page.data.img || ''
-  const summary = props.routes[1].page.data.summary || ''
-  const url = `http://codesheep.io${location.pathname}`
+  const img = (props.routes) ? props.routes[1].page.data.img : ''
+  const summary = (props.routes) ? props.routes[1].page.data.summary : ''
+  const url = (location) ? `http://codesheep.io${location.pathname}` : ''
 
   return (
     <html lang="en">
