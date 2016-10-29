@@ -9,6 +9,7 @@ gatsby build
 cp CNAME public/CNAME
 git add public -f
 git commit -m 'build'
+git push origin --delete gh-pages
 git subtree push --prefix public origin gh-pages
 git checkout master
 git branch -D tmp-build

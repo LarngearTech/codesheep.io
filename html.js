@@ -3,7 +3,7 @@ import DocumentTitle from 'react-document-title'
 import { GoogleFont, TypographyStyle } from 'utils/typography'
 
 const Html = (props) => {
-  const { favicon, body } = props
+  const { location, favicon, body } = props
   let title = DocumentTitle.rewind()
   if (props.title) {
     title = props.title
@@ -13,6 +13,9 @@ const Html = (props) => {
   if (process.env.NODE_ENV === 'production') {
     cssLink = <link rel="stylesheet" href={'/styles.css'} />
   }
+  const img = props.routes[1].page.data.img || ''
+  const summary = props.routes[1].page.data.summary || ''
+  const url = `http://codesheep.io${location.pathname}`
 
   return (
     <html lang="en">
@@ -21,12 +24,12 @@ const Html = (props) => {
       <meta charSet="utf-8" />
       <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta property="og:title" content="CodeSheep.io - 2016" />
+      <meta property="og:title" content={title} />
       <meta property="og:type" content="website" />
-      <meta property="og:url" content="http://codesheep.io/" />
-      <meta property="og:image" content="" />
+      <meta property="og:url" content={url} />
+      <meta property="og:image" content={img} />
       <meta property="og:site_name" content="CodeSheep" />
-      <meta property="og:description" content="CodeSheep.io" />
+      <meta property="og:description" content={summary} />
       <meta property="fb:app_id" content="1805086963105739" />
       <title>
         {props.title}
@@ -56,6 +59,8 @@ Html.propTypes = {
   body: PropTypes.string,
   favicon: PropTypes.string,
   title: PropTypes.string,
+  location: PropTypes.object,
+  routes: PropTypes.arrayOf(PropTypes.object),
 }
 
 Html.defaultProps = {
