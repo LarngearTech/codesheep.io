@@ -139,3 +139,8 @@ a-code {
   //      url('/font/Winterthur/Winterthur.ttf')  format('truetype'), /* Safari, Android, iOS */
   //      url('/font/Winterthur/Winterthur.svg#svgFontName') format('svg'); /* Legacy iOS */
 }
+
+pre code {
+  font-size: 1.8rem;
+  line-height: 2.5rem;
+}
