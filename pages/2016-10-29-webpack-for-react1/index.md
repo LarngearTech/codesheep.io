@@ -4,7 +4,7 @@ title: "Webpack for React developer ตอนที่ 1"
 summary: "บล๊อก technical blog แรกในชีวิต อยากจะมาแชร์การตั้งค่า webpack ที่ใช้ในการพัฒนา project react ที่ตัวเองใช้อยุ่บ่อยๆ"
 tags:
 - wepback
-img: "/2016/10/29/webpack-for-react1/thumbnail.jpg"
+img: "https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-29-webpack-for-react1/thumbnail.jpg"
 author: "Arnupharp Viratanapanu"
 ---
 จำได้ว่าเมื่อตอนที่เริ่มหัดเขียน react ใหม่ๆ สิ่งที่เป็นปัญหาอย่างหนึ่งในการหัดเขียนคือการ set environment
