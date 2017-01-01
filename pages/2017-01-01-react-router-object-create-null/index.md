@@ -6,7 +6,7 @@ tags:
 - react-router
 - javascript
 - prototype
-img: "https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2017-01-01-react-router-match-pattern/react_router_v4.png"
+img: "https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2017-01-01-react-router-object-create-null/react_router_v4.png"
 author: "Supasate Choochaisri"
 ---
 
