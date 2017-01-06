@@ -18,7 +18,7 @@ const Post = ({ post, path, route }) => (
           marginBottom: rhythm(2),
         }}
       >
-        Posted {pathToDate(path)}
+        Posted {pathToDate(path)} by {post.author}
       </em>
       <div dangerouslySetInnerHTML={{ __html: post.body }} />
       <hr
