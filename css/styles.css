@@ -63,6 +63,10 @@ body li {
   list-style-type: none;
 }
 
+body ol li {
+  list-style-type: decimal;
+}
+
 @media screen and (max-width: 600px) {
   html {
     font-size: 0.813333em;
