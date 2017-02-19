@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta name="google-site-verification" content="BDpu467SDH-R3dspBS7Otq9SonfabJLKZxCEALZH4-Q"/><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="สร้าง npm package ขึ้น npmjs.com | CodeSheep Blog"/><meta property="og:type" content="website"/><meta property="og:url" content="http://codesheep.io/2016/10/26/publish-npm-package/"/><meta property="og:image" content="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-26-publish-npm-package/npmjs.jpg"/><meta property="og:site_name" content="CodeSheep"/><meta property="og:description" content="เชื่อว่าทุกคนที่ใช้ Node.js ต้องมีการติดตั้ง node package ผ่านคำสั่ง npm install กันเป็นประจำอยู่แล้วใช่มั้ยครับ (หรือไม่ก็ใช้ yarn กันแทนแล้ว) ในบทความนี้เราจะเปลี่ยนจากบทบาทผู้บริโภค package มาเป็นผู้ผลิต package กันบ้างครับ โดยจะพูดถึงวิธีการนำ npm package ของตัวเองขึ้นไปยัง npmjs.com เพื่อให้คนอื่นเรียกใช้ package ของเราได้ ซึ่งวิธีการนั้นง่ายกว่าที่หลายคนคิดกันมากๆ ลองมาทำกันดูนะครับ (อ่านต่อ)"/><meta property="fb:app_id" content="1805086963105739"/><title></title><link rel="shortcut icon"/><link href="//fonts.googleapis.com/css?family=Lora:400,400italic,700|Open+Sans:700" rel="stylesheet" type="text/css"/><style id="typography.js">/*! normalize.css v3.0.2 | MIT License | git.io/normalize */html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+
+html {
+  box-sizing: border-box;
+  font-size: 125%;
+  line-height: 1.5em;
+  overflow-y: scroll;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  color: hsl(0,0%,20%);
+  font-family: Lora;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+/* Make image responsive by default */
+img {
+  max-width: 100%;
+}
+
+h1,h2,h3,h4,h5,h6,hgroup,ul,ol,dl,dd,p,figure,pre,table,fieldset,blockquote,form,noscript,iframe,img,hr {
+margin: 0;
+margin-bottom: 1.5rem;
+padding: 0;
+}
+
+blockquote {
+margin: 1.5rem 3.75rem;
+}
+
+b,strong {
+font-weight: 700
+}
+
+hr {
+background: hsl(0,0%,80%);
+border: none;
+height: 1px;
+margin-bottom: calc(1.5rem - 1px);
+}
+
+ol,ul {
+list-style-position: outside;
+margin-left: 1.5rem;
+}
+
+ul li,ol li {
+padding-left: 0;
+}
+
+code,kbd,pre,samp {
+font-size: 0.85rem;
+line-height: 1.5rem;
+}
+
+table {
+font-size: 1rem;
+line-height: 2.25rem;
+width: 100%;
+}
+
+thead {
+text-align: left;
+}
+
+h1,h2,h3,h4,h5,h6 {
+color: hsl(0,0%,25%);
+font-family: Open Sans;
+font-weight: 700;
+}
+
+h1 {
+font-size: 4.23607rem;
+line-height: 4.5rem;
+}
+
+h2 {
+font-size: 2.61803rem;
+line-height: 3rem;
+}
+
+h3 {
+font-size: 1.61803rem;
+line-height: 2.25rem;
+}
+
+h4 {
+font-size: 1.37824rem;
+line-height: 2.25rem;
+}
+
+h5 {
+font-size: 1.17398rem;
+line-height: 1.5rem;
+}
+
+h6 {
+font-size: 1rem;
+line-height: 1.5rem;
+}
+
+
+</style><link rel="stylesheet" href="/styles.css"/></head><body class="landing-page"><div id="react-mount"><div style="max-width:960px;margin-left:auto;margin-right:auto;padding:3rem 0.75rem;" data-reactid=".j8292csfk6" data-react-checksum="1325227628"><div class="headroom-wrapper" data-reactid=".j8292csfk6.0:0"><div style="position:relative;top:0;left:0;right:0;z-index:1;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0);" class="headroom headroom--unfixed" data-reactid=".j8292csfk6.0:0.0"><div class="nav-top-bar" data-reactid=".j8292csfk6.0:0.0.0"><nav class="navbar navbar-default" data-reactid=".j8292csfk6.0:0.0.0.0"><div class="container" data-reactid=".j8292csfk6.0:0.0.0.0.0"><div class="navbar-header" style="height:70px;" data-reactid=".j8292csfk6.0:0.0.0.0.0.0"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" data-reactid=".j8292csfk6.0:0.0.0.0.0.0.0"><span class="sr-only" data-reactid=".j8292csfk6.0:0.0.0.0.0.0.0.0">Toggle navigation</span><span class="icon-bar" data-reactid=".j8292csfk6.0:0.0.0.0.0.0.0.1"></span><span class="icon-bar" data-reactid=".j8292csfk6.0:0.0.0.0.0.0.0.2"></span><span class="icon-bar" data-reactid=".j8292csfk6.0:0.0.0.0.0.0.0.3"></span></button><a href="/" data-reactid=".j8292csfk6.0:0.0.0.0.0.0.1"><a class="navbar-brand" href="#" data-reactid=".j8292csfk6.0:0.0.0.0.0.0.1.0"><img style="height:45px;margin-top:-3px;" src="/images/logo.png" data-reactid=".j8292csfk6.0:0.0.0.0.0.0.1.0.0"/></a></a></div><div id="navbar" class="navbar-collapse collapse" data-reactid=".j8292csfk6.0:0.0.0.0.0.1"><ul class="nav navbar-nav" data-reactid=".j8292csfk6.0:0.0.0.0.0.1.0"></ul></div></div></nav></div></div></div><div class="template-header-blog" data-reactid=".j8292csfk6.0:1"></div><div class="md-post" data-reactid=".j8292csfk6.0:2"><div class="col-lg-9 col-md-9" data-reactid=".j8292csfk6.0:2.0"><div class="markdown" data-reactid=".j8292csfk6.0:2.0.0"><h1 data-reactid=".j8292csfk6.0:2.0.0.0">สร้าง npm package ขึ้น npmjs.com</h1><em style="display:block;margin-bottom:3rem;" data-reactid=".j8292csfk6.0:2.0.0.1"><span data-reactid=".j8292csfk6.0:2.0.0.1.0">Posted </span><span data-reactid=".j8292csfk6.0:2.0.0.1.1">October 26, 2016</span><span data-reactid=".j8292csfk6.0:2.0.0.1.2"> by </span><span data-reactid=".j8292csfk6.0:2.0.0.1.3">Supasate Choochaisri</span></em><div data-reactid=".j8292csfk6.0:2.0.0.2"><p>เชื่อว่าทุกคนที่ใช้ Node.js ต้องมีการติดตั้ง node package ผ่านคำสั่ง npm install กันเป็นประจำอยู่แล้วใช่มั้ยครับ (หรือไม่ก็ใช้ <a href="https://github.com/yarnpkg/yarn">yarn</a> กันแทนแล้ว) ในบทความนี้เราจะเปลี่ยนจากบทบาทผู้บริโภค package มาเป็นผู้ผลิต package กันบ้างครับ โดยจะพูดถึงวิธีการนำ npm package ของตัวเองขึ้นไปยัง <a href="http://npmjs.com">npmjs.com</a> เพื่อให้คนอื่นเรียกใช้ package ของเราได้ ซึ่งวิธีการนั้นง่ายกว่าที่หลายคนคิดกันมากๆ ลองมาทำกันดูนะครับ</p>
+<h2>ขั้นที่ 0 เตรียม package</h2>
+<p>สมมติว่าผมมี package ชื่อ <code>hello-by-supasate</code> ที่อยากจะ publish ขึ้น <a href="http://npmjs.com">npmjs.com</a> โครงสร้าง folder ผมหน้าตาแบบนี้</p>
+<pre><code class="language-javascript">hello-by-supasate
+|-- src
+|   |-- hello.js
+|-- test
+|   |-- hello.spec.js
+|-- .gitignore
+|-- package.json
+|-- README.md
+</code></pre>
+<p>(ดูได้ที่ <a href="https://github.com/supasate/hello-by-supasate">github repository</a>)</p>
+<p>ไฟล์ที่จำเป็นที่สุดคือไฟล์ <code>package.json</code> ลองดูภาพรวมของไฟล์กันก่อนครับ</p>
+<pre><code class="language-javascript">{
+  <span class="hljs-string">"name"</span>: <span class="hljs-string">"hello-by-supasate"</span>, <span class="hljs-comment">// ชื่อ package</span>
+  <span class="hljs-string">"version"</span>: <span class="hljs-string">"1.0.0"</span>, <span class="hljs-comment">// เลขเวอร์ชัน</span>
+  <span class="hljs-string">"description"</span>: <span class="hljs-string">"A silly repo for demonstrating how to publish a node package to npmjs.com"</span>, <span class="hljs-comment">// คำอธิบาย package จะไปแสดงไว้ใต้ชื่อ package ในเว็บ npmjs.com</span>
+  <span class="hljs-string">"main"</span>: <span class="hljs-string">"src/hello.js"</span>, <span class="hljs-comment">// entry point (อ่านคำบรรยายด้านล่าง)</span>
+  <span class="hljs-string">"scripts"</span>: { <span class="hljs-comment">// npm script ต่างๆที่ใช้ระหว่างพัฒนา</span>
+    <span class="hljs-string">"test"</span>: <span class="hljs-string">"mocha"</span>
+  },
+  <span class="hljs-string">"repository"</span>: { <span class="hljs-comment">// บอกว่า source code เราเก็บไว้ที่ไหนและประเภทอะไร</span>
+    <span class="hljs-string">"type"</span>: <span class="hljs-string">"git"</span>,
+    <span class="hljs-string">"url"</span>: <span class="hljs-string">"git+https://github.com/supasate/hello-by-supasate.git"</span>
+  },
+  <span class="hljs-string">"keywords"</span>: [ <span class="hljs-comment">// keywords จะปรากฎในหน้า package ของเราบน npmjs.com</span>
+    <span class="hljs-string">"npm"</span>,
+    <span class="hljs-string">"hello"</span>
+  ],
+  <span class="hljs-string">"author"</span>: <span class="hljs-string">"Supasate Choochaisri"</span>, <span class="hljs-comment">// ชื่อผู้เขียนโปรแกรม</span>
+  <span class="hljs-string">"license"</span>: <span class="hljs-string">"MIT"</span>, <span class="hljs-comment">// รูปแบบสัญญาอนุญาตที่ให้นำไปใช้งานได้</span>
+  <span class="hljs-string">"bugs"</span>: { <span class="hljs-comment">// ช่องทางแจ้ง bug ของ package</span>
+    <span class="hljs-string">"url"</span>: <span class="hljs-string">"https://github.com/supasate/hello-by-supasate/issues"</span>
+  },
+  <span class="hljs-string">"homepage"</span>: <span class="hljs-string">"https://github.com/supasate/hello-by-supasate#readme"</span>, <span class="hljs-comment">// หน้าเว็บหลักของ package</span>
+  <span class="hljs-string">"devDependencies"</span>: { <span class="hljs-comment">// depenendencies ที่ใช้ในระหว่างพัฒนา จะไม่ถูกติดตั้งไปกับคำสั่ง npm install</span>
+    <span class="hljs-string">"chai"</span>: <span class="hljs-string">"^3.5.0"</span>,
+    <span class="hljs-string">"mocha"</span>: <span class="hljs-string">"^3.1.2"</span>
+  }
+}
+
+</code></pre>
+<p>ส่วนที่สำคัญคือ <code>main</code> หรือที่ผม comment ไว้ว่าเป็น entry point
+ซึ่งหมายถึงว่าเวลาคนสั่ง <code>require('hello-by-supasate')</code> ในโค้ดของเค้าแล้ว ค่าที่ได้มาคือค่าของตัวแปร <code>exports</code> ของ module นั้นๆมาให้ผู้ใช้งาน ซึ่งก็คือ <code>module.exports</code> ในไฟล์ที่กำหนดไว้ใน <code>main</code> ของเรานั่นเอง</p>
+<p>เช่น ในไฟล์ <code>src/hello.js</code> ของผมมีหน้าตาแบบนี้</p>
+<pre><code class="language-javascript"><span class="hljs-built_in">module</span>.exports = <span class="hljs-function">(<span class="hljs-params">name</span>) =&gt;</span> <span class="hljs-string">`Hello <span class="hljs-subst">${name}</span>`</span>
+
+<span class="hljs-comment">// ฟังก์ชันที่รับ argument ชื่อ name แล้ว return string คำว่า 'Hello' กับชื่อที่รับเข้ามาจากตัวแปร name</span>
+</code></pre>
+<p>ดังนั้นเวลาคนอื่นเอาไปใช้ก็สามารถใช้งานได้โดยวิธีนี้</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> hello = <span class="hljs-built_in">require</span>(<span class="hljs-string">'hello-by-supasate'</span>)
+
+<span class="hljs-built_in">console</span>.log(hello(<span class="hljs-string">'World'</span>)) <span class="hljs-comment">// แสดง 'Hello World'</span>
+</code></pre>
+<p>หรือถ้าเป็น ES6 ก็เขียนแบบนี้ได้</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">import</span> hello <span class="hljs-keyword">from</span> <span class="hljs-string">'hello-by-supasate'</span>
+
+<span class="hljs-built_in">console</span>.log(hello(<span class="hljs-string">'World'</span>)) <span class="hljs-comment">// แสดง 'Hello World'</span>
+</code></pre>
+<p>เมื่อ package เราพร้อมให้คนอื่นเรียกใช้แล้ว เราก็มาทำการ publish package ของเรากันเลยครับ</p>
+<h2>ขั้นที่ 1 สร้าง account</h2>
+<p>สร้าง account บนเว็บ <a href="http://npmjs.com">npmjs.com</a> โดย username ที่เลือกจะนำไปใช้กับ profile บน <a href="http://npmjs.com">npmjs.com</a>  ของเรา (เช่น ของผมจะเป็น <a href="http://www.npmjs.com/~supasate">www.npmjs.com/~supasate</a>)</p>
+<p>หรือถ้าใครขี้เกียจสมัครผ่านเว็บก็สมัครผ่าน command line ได้เลย โดยใช้คำสั่ง <code>npm adduser</code> และระบุ username, password, email พอสร้างเสร็จด้วยวิธีนี้เสร็จแล้วจะ log in เข้าสู่ระบบให้อัตโนมัติให้เลยแสนสบาย</p>
+<pre><code>$ npm adduser
+<span class="hljs-symbol">Username:</span> <span class="hljs-params">&lt;your_usrname&gt;</span>
+<span class="hljs-symbol">Password:</span> <span class="hljs-params">&lt;your_password&gt;</span>
+<span class="hljs-symbol">Email:</span> (this IS public) <span class="hljs-params">&lt;your_email&gt;</span>@<span class="hljs-params">&lt;domain.com&gt;</span>
+Logged in as <span class="hljs-params">&lt;your_username&gt;</span> on https:<span class="hljs-comment">//registry.npmjs.org/.</span>
+</code></pre>
+<p>(สังเกตบรรทัดสุดจะขึ้นว่า <code>Logged in as ...</code> แปลว่า log in สำเร็จเรียบร้อย)</p>
+<h2>ขั้นที่ 2 เข้าสู่ระบบ</h2>
+<p>สำหรับคนที่ไม่ได้สร้าง account ผ่าน command line หรือเคยมี account อยู่แล้ว สามารถเข้าสู่ระบบได้ด้วยคำสั่ง <code>npm login</code></p>
+<pre><code>$ npm login
+<span class="hljs-symbol">Username:</span> <span class="hljs-params">&lt;your_usrname&gt;</span>
+<span class="hljs-symbol">Password:</span> <span class="hljs-params">&lt;your_password&gt;</span>
+<span class="hljs-symbol">Email:</span> (this IS public) <span class="hljs-params">&lt;your_email&gt;</span>@<span class="hljs-params">&lt;domain.com&gt;</span>
+Logged in as <span class="hljs-params">&lt;your_username&gt;</span> on https:<span class="hljs-comment">//registry.npmjs.org/.</span>
+</code></pre>
+<h2>ขั้นที่ 3 publish package</h2>
+<p>เมื่อพร้อมแล้วก็สั่งคำสั่ง <code>npm publish</code></p>
+<pre><code class="language-bash">$ npm publish
++ hello-by-supasate@1.0.0
+</code></pre>
+<p>เท่านี้ package ของเราก็ขึ้นไปยัง <a href="http://npmjs.com">npmjs.com</a> ให้คนเรียกใช้แล้วดังรูป ง่ายดายมากๆครับ
+<img src="./published.jpg" alt="ขึ้น npmjs.com แล้ว"></p>
+<p>เราลองมาทดสอบใช้งาน package ของเราดูดีกว่า โดยการสร้าง folder เปล่าๆ แล้วติดตั้ง package ของเราดูกันครับ</p>
+<pre><code>$ <span class="hljs-keyword">mkdir</span> <span class="hljs-keyword">test</span>-my-package &amp;&amp; <span class="hljs-keyword">cd</span> <span class="hljs-keyword">test</span>-my-package
+$ npm install --<span class="hljs-keyword">save</span> hello-<span class="hljs-keyword">by</span>-supasate <span class="hljs-comment">// หรือ yarn add hello-by-supasate</span>
+</code></pre>
+<p>หลังจากติดตั้งเสร็จ สร้างไฟล์ <code>index.js</code> ดังนี้</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> hello = <span class="hljs-built_in">require</span>(<span class="hljs-string">'hello-by-supasate'</span>)
+
+<span class="hljs-built_in">console</span>.log(hello(<span class="hljs-string">'World'</span>))
+</code></pre>
+<p>แล้วสั่ง run ด้วย <code>node index.js</code> จะได้ผลดังนี้</p>
+<pre><code>$ <span class="hljs-keyword">node</span> <span class="hljs-title">index</span>.js
+Hello World
+</code></pre>
+<p>เป็นอันว่า package ของเราใช้งานได้เรียบร้อยครับ</p>
+<h2>ขั้นที่ 4 อัพเดท package</h2>
+<p>คราวนี้ถ้าเราต้องการแก้ไข package ของเราแล้วส่งอัพเดทขึ้นไปใหม่ทำยังไง</p>
+<p>สมมติว่าเราทำการแก้ไข README เพื่อเพิ่มวิธีการใช้งาน package เราเข้าไปและ git commit เรียบร้อยแล้ว เราสามารถสั่ง <code>npm version &lt;update_type&gt;</code> เพื่อเพิ่มเลขเวอร์ชั่นของเราในไฟล์ package.json และ commit ให้โดยอัตโนมัติ</p>
+<p>โดย &lt;update_type&gt; สามารถกำหนดเป็นเลขเวอร์ชั่นตามแบบ <a href="http://semver.org/">semver</a> ได้ (คือ MAJOR.MINOR.PATCH เช่น 1.0.1) หรือถ้าใช้เป็นคำว่า major หรือ minor หรือ patch ก็จะเพิ่มเลขรุ่นตามที่ต้องการของ semver นั้นๆให้</p>
+<p>เช่น ถ้าปัจจุบันเป็นเวอร์ชั่น version 1.0.1</p>
+<ul>
+<li>สั่ง <code>npm version patch</code> จะกลายเป็น 1.0.2</li>
+<li>สั่ง <code>npm version minor</code> จะกลายเป็น 1.1.0</li>
+<li>สั่ง <code>npm version major</code> จะกลายเป็น 2.0.0</li>
+</ul>
+<p>พอเราเพิ่มเลขเวอร์ชันใน package.json ของเราเรียบร้อยแล้ว ให้สั่ง <code>npm publish</code> อีกครั้งเพื่ออัพเดท package ใหม่ของเราขึ้นไป</p>
+<pre><code>$ <span class="hljs-built_in">npm</span> publish
++ hello-<span class="hljs-keyword">by</span>-supasate@<span class="hljs-number">1.0</span><span class="hljs-number">.1</span>
+</code></pre>
+<p>ลองกลับเข้าไปดูที่หน้าเว็บอีกครั้งก็จะพบว่า package ใหม่ของเราขึ้นไปแล้ว พร้อมกับแสดงข้อมูลจากไฟล์ <a href="https://github.com/supasate/hello-by-supasate/blob/master/README.md">README.md</a> ที่ผมแก้ไขแสดงไว้ด้วย</p>
+<p><img src="./updated.jpg" alt="updated"></p>
+<p>ก็หวังว่าเพื่อนๆจะได้ลองนำ package ของตัวเองขึ้น <a href="http://npmjs.com">npmjs.com</a> เพื่อให้คนอื่นใช้งานหรือเพื่อให้ตัวเองใช้งาน package ของตัวเองในโปรเจคอื่นกันได้ง่ายขึ้นนะครับ</p>
+</div><hr style="margin-bottom:3rem;" data-reactid=".j8292csfk6.0:2.0.0.3"/><noscript data-reactid=".j8292csfk6.0:2.0.0.4"></noscript></div></div><div class="col-lg-3 col-md-3" data-reactid=".j8292csfk6.0:2.1"><div class="right-bar-post" data-reactid=".j8292csfk6.0:2.1.0"><div class="frame-right-bar-post" data-reactid=".j8292csfk6.0:2.1.0.0"><div class="post-right-bar-share" data-reactid=".j8292csfk6.0:2.1.0.0.0"><div class="SocialMediaShareButton SocialMediaShareButton--facebook" data-reactid=".j8292csfk6.0:2.1.0.0.0.0"><div class="btn-group" style="width:100%;cursor:pointer;" data-reactid=".j8292csfk6.0:2.1.0.0.0.0.0"><a class="btn btn-primary disabled" data-reactid=".j8292csfk6.0:2.1.0.0.0.0.0.0"><i class="fa fa-facebook" data-reactid=".j8292csfk6.0:2.1.0.0.0.0.0.0.0"></i></a><a class="btn btn-primary" data-reactid=".j8292csfk6.0:2.1.0.0.0.0.0.1">Share</a></div></div></div><div class="recent-posts" data-reactid=".j8292csfk6.0:2.1.0.0.1"><div class="recent-posts-title" data-reactid=".j8292csfk6.0:2.1.0.0.1.0"><h3 data-reactid=".j8292csfk6.0:2.1.0.0.1.0.0">Recent Posts</h3></div><div class="recent-posts-content" data-reactid=".j8292csfk6.0:2.1.0.0.1.1"><div class="load-recent-posts" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.0"><a href="/2016/10/26/publish-npm-package/" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.0.0"><div class="load-recent-posts-header" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.0.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-26-publish-npm-package/npmjs.jpg" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.0.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.0.0.1">สร้าง npm package ขึ้น npmjs.com</div></a></div><div class="load-recent-posts" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.1"><a href="/2016/10/29/webpack-for-react1/" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.1.0"><div class="load-recent-posts-header" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.1.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-29-webpack-for-react1/thumbnail.jpg" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.1.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.1.0.1">Webpack for React developer ตอนที่ 1</div></a></div><div class="load-recent-posts" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.2"><a href="/2016/12/10/yarn-link/" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.2.0"><div class="load-recent-posts-header" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.2.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-12-10-yarn-link/yarn.jpg" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.2.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.2.0.1">ทดสอบ local npm package ด้วย yarn link</div></a></div><div class="load-recent-posts" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.3"><a href="/2017/01/01/react-router-object-create-null/" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.3.0"><div class="load-recent-posts-header" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.3.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2017-01-01-react-router-object-create-null/react_router_v4.png" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.3.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".j8292csfk6.0:2.1.0.0.1.1.3.0.1">แกะโค้ด react-router v4 - ตอนที่ 1 Object.create(null)</div></a></div></div></div></div></div></div></div><footer class="footer-template" style="color:#999;font-size:0.75rem;text-align:right;" data-reactid=".j8292csfk6.0:3"></footer><span style="display:block;clear:both;" data-reactid=".j8292csfk6.1"> </span></div></div><script src="/bundle.js"></script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-81455356-1', 'auto');ga('send', 'pageview');</script></script></body></html>

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta name="google-site-verification" content="BDpu467SDH-R3dspBS7Otq9SonfabJLKZxCEALZH4-Q"/><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="แผนผัง Redux Architecture | CodeSheep Blog"/><meta property="og:type" content="website"/><meta property="og:url" content="http://codesheep.io/2017/01/06/redux-architecture/"/><meta property="og:image" content="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2017-01-06-redux-architecture/redux_architecture.png"/><meta property="og:site_name" content="CodeSheep"/><meta property="og:description" content="คิดว่าหลายๆคนที่เคยเขียน Redux กันมาบ้าง คงจะคุ้นเคยกับคำว่า Uni-Directional Data Flow ซึ่งได้อิทธิพลมาจาก Flux Architecture แต่ว่าพอไปเริ่มเขียนกันจริงแล้ว ช่วงแรกๆจะเห็นภาพไม่ค่อยชัดว่ามันสัมพันธ์กับแต่ละ component ที่เราเขียนยังไง ในบทความนี้ผมเลยนำแผนผัง Redux Architecture ที่ทำขึ้นมาเพื่อใช้สอนใน Bootcamp ของ CodeSheep มาให้ดูกันนะครับ (อ่านต่อ)"/><meta property="fb:app_id" content="1805086963105739"/><title></title><link rel="shortcut icon"/><link href="//fonts.googleapis.com/css?family=Lora:400,400italic,700|Open+Sans:700" rel="stylesheet" type="text/css"/><style id="typography.js">/*! normalize.css v3.0.2 | MIT License | git.io/normalize */html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+
+html {
+  box-sizing: border-box;
+  font-size: 125%;
+  line-height: 1.5em;
+  overflow-y: scroll;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  color: hsl(0,0%,20%);
+  font-family: Lora;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+/* Make image responsive by default */
+img {
+  max-width: 100%;
+}
+
+h1,h2,h3,h4,h5,h6,hgroup,ul,ol,dl,dd,p,figure,pre,table,fieldset,blockquote,form,noscript,iframe,img,hr {
+margin: 0;
+margin-bottom: 1.5rem;
+padding: 0;
+}
+
+blockquote {
+margin: 1.5rem 3.75rem;
+}
+
+b,strong {
+font-weight: 700
+}
+
+hr {
+background: hsl(0,0%,80%);
+border: none;
+height: 1px;
+margin-bottom: calc(1.5rem - 1px);
+}
+
+ol,ul {
+list-style-position: outside;
+margin-left: 1.5rem;
+}
+
+ul li,ol li {
+padding-left: 0;
+}
+
+code,kbd,pre,samp {
+font-size: 0.85rem;
+line-height: 1.5rem;
+}
+
+table {
+font-size: 1rem;
+line-height: 2.25rem;
+width: 100%;
+}
+
+thead {
+text-align: left;
+}
+
+h1,h2,h3,h4,h5,h6 {
+color: hsl(0,0%,25%);
+font-family: Open Sans;
+font-weight: 700;
+}
+
+h1 {
+font-size: 4.23607rem;
+line-height: 4.5rem;
+}
+
+h2 {
+font-size: 2.61803rem;
+line-height: 3rem;
+}
+
+h3 {
+font-size: 1.61803rem;
+line-height: 2.25rem;
+}
+
+h4 {
+font-size: 1.37824rem;
+line-height: 2.25rem;
+}
+
+h5 {
+font-size: 1.17398rem;
+line-height: 1.5rem;
+}
+
+h6 {
+font-size: 1rem;
+line-height: 1.5rem;
+}
+
+
+</style><link rel="stylesheet" href="/styles.css"/></head><body class="landing-page"><div id="react-mount"><div style="max-width:960px;margin-left:auto;margin-right:auto;padding:3rem 0.75rem;" data-reactid=".1pqn0az8mb2" data-react-checksum="-1725622822"><div class="headroom-wrapper" data-reactid=".1pqn0az8mb2.0:0"><div style="position:relative;top:0;left:0;right:0;z-index:1;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0);" class="headroom headroom--unfixed" data-reactid=".1pqn0az8mb2.0:0.0"><div class="nav-top-bar" data-reactid=".1pqn0az8mb2.0:0.0.0"><nav class="navbar navbar-default" data-reactid=".1pqn0az8mb2.0:0.0.0.0"><div class="container" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0"><div class="navbar-header" style="height:70px;" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.0"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.0.0"><span class="sr-only" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.0.0.0">Toggle navigation</span><span class="icon-bar" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.0.0.1"></span><span class="icon-bar" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.0.0.2"></span><span class="icon-bar" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.0.0.3"></span></button><a href="/" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.0.1"><a class="navbar-brand" href="#" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.0.1.0"><img style="height:45px;margin-top:-3px;" src="/images/logo.png" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.0.1.0.0"/></a></a></div><div id="navbar" class="navbar-collapse collapse" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.1"><ul class="nav navbar-nav" data-reactid=".1pqn0az8mb2.0:0.0.0.0.0.1.0"></ul></div></div></nav></div></div></div><div class="template-header-blog" data-reactid=".1pqn0az8mb2.0:1"></div><div class="md-post" data-reactid=".1pqn0az8mb2.0:2"><div class="col-lg-9 col-md-9" data-reactid=".1pqn0az8mb2.0:2.0"><div class="markdown" data-reactid=".1pqn0az8mb2.0:2.0.0"><h1 data-reactid=".1pqn0az8mb2.0:2.0.0.0">แผนผัง Redux Architecture</h1><em style="display:block;margin-bottom:3rem;" data-reactid=".1pqn0az8mb2.0:2.0.0.1"><span data-reactid=".1pqn0az8mb2.0:2.0.0.1.0">Posted </span><span data-reactid=".1pqn0az8mb2.0:2.0.0.1.1">January 6, 2017</span><span data-reactid=".1pqn0az8mb2.0:2.0.0.1.2"> by </span><span data-reactid=".1pqn0az8mb2.0:2.0.0.1.3">Supasate Choochaisri</span></em><div data-reactid=".1pqn0az8mb2.0:2.0.0.2"><p>คิดว่าหลายๆคนที่เคยเขียน Redux กันมาบ้าง คงจะคุ้นเคยกับคำว่า Uni-Directional Data Flow ซึ่งได้อิทธิพลมาจาก Flux Architecture แต่ว่าพอไปเริ่มเขียนกันจริงแล้ว ช่วงแรกๆจะเห็นภาพไม่ค่อยชัดว่ามันสัมพันธ์กับแต่ละ component ที่เราเขียนยังไง ในบทความนี้ผมเลยนำแผนผัง Redux Architecture ที่ทำขึ้นมาเพื่อใช้สอนใน Bootcamp ของ CodeSheep มาให้ดูกันนะครับ</p>
+<p>หมายเหตุ บทความนี้เหมาะสำหรับคนที่เคยเขียน redux มาก่อนแล้ว แต่ถ้าไม่เคยเขียนมาก่อนก็ไม่ต้องสนใจส่วนที่เป็นโค้ดก็ได้ครับ</p>
+<h1>Simplified Redux Architecture</h1>
+<p><img src="./simplified_redux_architecture.png" alt="Simplified Redux Architecture"></p>
+<p>เริ่มจากอันแรกเป็นแผนผังให้เห็นภาพรวมแบบง่ายๆ ที่หลายๆที่ก็ทำออกมาคล้ายๆแบบนี้กัน มีจุดที่น่าสนใจดังนี้ครับ</p>
+<h2>Store</h2>
+<ol>
+<li>state และ reducer อยู่ใน store ซึ่งช่วยให้เราจำได้ว่าตอนเราสร้าง store ด้วยคำสั่ง <code>createStore</code> เราเลยต้องส่ง <code>initialState</code> กับ <code>rootReducer</code> เป็น parameters เพื่อสร้างก้อน store นี้ขึ้นมานั่นเอง</li>
+<li>store จะมีคำสั่ง <code>dispatch</code> เป็น API ให้เรียกใช้ได้ ถ้าจำกันได้ตอนเราทำ <code>mapDispatchToProps</code> เราจะเรียกคำสั่ง <code>dispatch</code> ได้ ซึ่งคำสั่งนี้ก็คือตัวเดียวกับ <code>store.dispatch</code> นั่นเอง</li>
+</ol>
+<h2>Simplified Data Flow</h2>
+<p>การวิ่งของข้อมูลที่เป็นทิศทางเดียว (Uni-directional Data Flow) จะแทนด้วยลูกศรสีเหลืองกรอบม่วง โดยภาพรวมแบบง่ายๆ เป็นดังนี้ครับ</p>
+<ol>
+<li>เริ่มต้นจากกล่อง state วิ่งลงมายัง View หรือ Component ของเรา (เข้ามาเป็น props)</li>
+<li>เมื่อ View ต้องการเปลี่ยนค่าใน store จะเรียก <code>dispatch</code> เพื่อส่ง action ไปยัง reducer</li>
+<li>Reducer เป็นฟังก์ชันที่รับค่า state ปัจจุบัน และ action เข้ามา แล้วคืนค่าออกมาเป็น state ถัดไป</li>
+<li>เมื่อ state เกิดการเปลี่ยนแปลงก็จะส่งค่ากลับลงมาเพื่ออัพเดท View ผ่านทาง props</li>
+</ol>
+<p>สังเกตว่าในภาพ state เป็นกล่องเดียว แต่จริงๆทุกครั้งที่ state เปลี่ยนจะเกิดกล่องใหม่ของส่วนที่เปลี่ยนแปลงขึ้นมา โดยเราจะไม่ไปแก้ไขค่าในกล่อง state เดิม (ตามหลักการของ pure function ที่จะไม่ก่อให้เกิด side effect)</p>
+<p>พอเห็นภาพรวมง่ายๆแบบนี้แล้ว เดี๋ยวเราลองไปดูแบบเต็มๆกันครับ</p>
+<h1>(Almost Complete) Redux Architecture</h1>
+<p><img src="./redux_architecture.png" alt="Redux Architecture"></p>
+<p>จะเห็นว่าพอเรามาเขียนโค้ดจริงๆมันมีหลายละเอียดปลีกย่อยเพิ่มมามาก ที่ใส่คำว่า <strong>almost complete</strong> คือจริงๆมันยังมีรายละเอียดมากกว่านี้ที่เรามองไม่เห็นและไม่ได้ใช้โดยตรง แผนภาพนี้เลยเน้นเฉพาะที่เกี่ยวข้องตอนเราใช้กันจริงๆครับ</p>
+<h2>Store</h2>
+<ol>
+<li>State object ของเรามีลักษณะเป็น key-value ทั่วไป แต่ละ key (เช่น auth, todos ในภาพ) ก็จะมี reducer ที่รับผิดชอบอยู่</li>
+<li>Root Reducer คือที่เราสร้างจากฟังก์ชัน <code>combineReducers</code> นั่นเอง ก็จะประกอบด้วย reducer แต่ละตัวที่รับผิดชอบแต่ละ sub-state ตาม key ของ state object</li>
+</ol>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> rootReducer = combineReducers({
+  <span class="hljs-attr">auth</span>: authReducer,
+  <span class="hljs-attr">todos</span>: todoReducer,
+})
+</code></pre>
+<ol start="3">
+<li>Middlewares ก็จะมีหลายตัว โดยภาพในตัวอย่างเราอาจมี middleware ตัวอื่นๆ ก่อนที่จะไปถึง redux-thunk middleware เป็นต้น</li>
+<li>จากข้อ 1 - 3 จะเห็นภาพชัดขึ้นว่าฟังก์ชัน <code>createStore</code> ที่ได้พูดไปแล้วมันต้องประกอบด้วยอะไรบ้างถึงได้เป็น store ขึ้นมา ก็คือ <code>initialState</code>, <code>rootReducer</code>, และ <code>applyMiddleware</code> ที่เราใช้กันนั่นเอง</li>
+</ol>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> store = createStore(
+  initialState,
+  rootReducer,
+  applyMiddleware(
+    thunk,
+    otherMiddleware,
+  )
+)
+</code></pre>
+<ol start="5">
+<li>นอกจากฟังก์ชัน <code>dispatch</code> แล้ว store ยังมี API อื่นๆอีก ตัวที่ใช้กันโดยไม่รู้ตัวก็คือ <code>store.subscribe</code> ที่จะคอยเรียก callback ให้ถ้า state มีการเปลี่ยนแปลง ซึ่งตัวที่แอบทำการ subscribe ให้เราก็คือฟังก์ชัน <code>connect</code> นั่นเอง โดยมันจะไป subscribe store ที่อยู่ใน context (อันนี้ขอไม่ลงรายละเอียดเรื่อง context ให้นึกว่ามันคล้ายๆ global object ที่ทำให้ส่งค่าต่างๆไปยังทุก component ได้โดยไม่ต้องส่งผ่าน props) ที่ component ชื่อ <code>Provider</code> เป็นคนจัดเตรียมไว้ให้ นั่นเป็นเหตุผลว่าทำไมเราต้องมี <code>Provider</code> ครอบโค้ดของเราและรับ store เป็น props เข้าไป</li>
+</ol>
+<pre><code class="language-js">&lt;Provider store={store}&gt;
+  ...
+&lt;/Provider&gt;
+</code></pre>
+<h2>Data Flow</h2>
+<p>ลองมาดูการวิ่งของข้อมูลแบบเต็มๆ กัน ขอแปะภาพเดิมซ้ำอีกที่จะได้ไม่ต้องเลื่อนขึ้นไปดูนะครับ</p>
+<p><img src="./redux_architecture.png" alt="Redux Architecture"></p>
+<ol>
+<li>เริ่มต้นจากกล่อง state โดยตอนเริ่มต้น container component ที่ครอบ presentational component ของเรา (ที่สร้างจากฟังก์ชัน <code>connect</code>) จะดึงค่า state และคำสั่ง dispatch จาก store มาให้ แล้วโยนต่อไปให้ <code>mapStateToProps</code> และ <code>mapDispatchToProps</code> เพื่อส่งเข้าไปเป็น props ให้เรา</li>
+</ol>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> mapStateToProps = <span class="hljs-function"><span class="hljs-params">state</span> =&gt;</span> ({
+  <span class="hljs-attr">auth</span>: state.auth,
+  <span class="hljs-attr">todos</span>: state.todos,
+})
+<span class="hljs-keyword">const</span> mapDispatchToProps = <span class="hljs-function"><span class="hljs-params">dispatch</span> =&gt;</span> ({
+  <span class="hljs-attr">fetchTodos</span>: <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> dispatch(fetchTodos())
+})
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> connect(mapStateToProps, mapDispatchToProps)(TodoList)
+</code></pre>
+<ol start="2">
+<li>Presentational Component ทำการเรียกฟังก์ชันที่จะทำการ dispatch โดยอาจจะ dispatch เป็น action object หรือเป็น action function (ถ้ามีการใช้ redux-thunk middleware)</li>
+<li>ระหว่างการ dispatch กับ reducer จะมี middleware ทั้งหลายคั่นอยู่ โดยถ้ามีการใช้ redux-thunk ก็จะมีการตรวจสอบว่า action ที่รับเข้ามานั้นเป็น object หรือเป็น function</li>
+</ol>
+<ul>
+<li>ถ้าเป็น function จะทำการประมวลผล function นั้นก่อน ซึ่งในฟังก์ชันนั้นอาจจะมีการ dispatch อย่างอื่นออกมาอีกก็ได้</li>
+</ul>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> fetchTodo = <span class="hljs-function"><span class="hljs-params">()</span> =&gt;</span> dispatch =&gt; {
+  fetch(...)
+    .then(<span class="hljs-function"><span class="hljs-params">todos</span> =&gt;</span> dispatch(fetchTodosSuccess(todos)))
+}
+</code></pre>
+<ul>
+<li>ถ้าเป็น object ก็จะส่งไปเข้า root reducer ทันที</li>
+</ul>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> fetchTodosSuccess = <span class="hljs-function">(<span class="hljs-params">todos</span>) =&gt;</span> ({
+  <span class="hljs-attr">type</span>: FETCH_TODOS_SUCCESS,
+  <span class="hljs-attr">payload</span>: todos,
+})
+</code></pre>
+<ol start="4">
+<li>ที่ rootReducer เป็นจุดที่คนเข้าใจผิดกันมากว่า action แต่ละประเภทจะไปเข้าแต่ละ reducer ที่เกี่ยวข้อง แต่จริงๆแล้ว <strong>ทุก</strong> action จะไปเข้า <strong>ทุก</strong> reducer ทั้งหมด แล้วแต่ละ reducer ถึงไปเลือกเองว่าถ้าไม่ต้องการก็ return state เดิมที่เป็นอยู่ไม่ต้องทำอะไร (ที่เรามักจะปล่อยผ่านด้วย <code>default</code> ใน <code>switch case</code> นั่นเอง)</li>
+<li>แต่ละ reducer ก็จะได้รับ parameter เป็น action object และ sub-state เฉพาะ key ที่มันรับผิดชอบมาเท่านั้น</li>
+</ol>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> todoReducer = <span class="hljs-function">(<span class="hljs-params">state, action</span>) =&gt;</span> { <span class="hljs-comment">// state ตรงนี้เป็นเพียง state.todos ของ root state tree</span>
+  ...
+}
+</code></pre>
+<p>และก็จะ return ค่าเป็น state ถัดไปออกมา</p>
+<ol start="6">
+<li>เมื่อ state เปลี่ยน ก็จะ trigger container component ที่ subscribe store อยู่เพื่อไปอัพเดท props ของ presentation component นั่นเอง</li>
+</ol>
+<p>ก็จะจบรอบการทำงาน 1 รอบของ ​Redux</p>
+<h2>ทิ้งท้าย</h2>
+<p>ก็หวังว่าแผนภาพ Redux Architecture นี้จะช่วยให้เห็นภาพรวมการเชื่อมโยงของแต่ละส่วนใน Redux มากขึ้นนะครับ ช่วงแรกๆ ที่ฝึก Redux จะรู้สึกว่ายาก เพราะว่า learning curve ค่อนข้างสูง แต่พอเข้าใจแล้วที่เหลือก็จะเป็น pattern เดิมๆ ซ้ำไปมาตลอดครับ อารมณ์เดียวกับ React เลย แนะนำว่าให้ลองเขียนแอพ TodoMVC ขึ้นมาเล่นโดยไม่ดูเฉลยซัก 3 รอบก็จะทำให้เข้าใจการทำงานของ redux แน่นขึ้นมากล่ะครับ</p>
+</div><hr style="margin-bottom:3rem;" data-reactid=".1pqn0az8mb2.0:2.0.0.3"/><noscript data-reactid=".1pqn0az8mb2.0:2.0.0.4"></noscript></div></div><div class="col-lg-3 col-md-3" data-reactid=".1pqn0az8mb2.0:2.1"><div class="right-bar-post" data-reactid=".1pqn0az8mb2.0:2.1.0"><div class="frame-right-bar-post" data-reactid=".1pqn0az8mb2.0:2.1.0.0"><div class="post-right-bar-share" data-reactid=".1pqn0az8mb2.0:2.1.0.0.0"><div class="SocialMediaShareButton SocialMediaShareButton--facebook" data-reactid=".1pqn0az8mb2.0:2.1.0.0.0.0"><div class="btn-group" style="width:100%;cursor:pointer;" data-reactid=".1pqn0az8mb2.0:2.1.0.0.0.0.0"><a class="btn btn-primary disabled" data-reactid=".1pqn0az8mb2.0:2.1.0.0.0.0.0.0"><i class="fa fa-facebook" data-reactid=".1pqn0az8mb2.0:2.1.0.0.0.0.0.0.0"></i></a><a class="btn btn-primary" data-reactid=".1pqn0az8mb2.0:2.1.0.0.0.0.0.1">Share</a></div></div></div><div class="recent-posts" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1"><div class="recent-posts-title" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.0"><h3 data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.0.0">Recent Posts</h3></div><div class="recent-posts-content" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1"><div class="load-recent-posts" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.0"><a href="/2016/10/26/publish-npm-package/" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.0.0"><div class="load-recent-posts-header" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.0.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-26-publish-npm-package/npmjs.jpg" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.0.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.0.0.1">สร้าง npm package ขึ้น npmjs.com</div></a></div><div class="load-recent-posts" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.1"><a href="/2016/10/29/webpack-for-react1/" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.1.0"><div class="load-recent-posts-header" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.1.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-29-webpack-for-react1/thumbnail.jpg" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.1.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.1.0.1">Webpack for React developer ตอนที่ 1</div></a></div><div class="load-recent-posts" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.2"><a href="/2016/12/10/yarn-link/" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.2.0"><div class="load-recent-posts-header" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.2.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-12-10-yarn-link/yarn.jpg" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.2.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.2.0.1">ทดสอบ local npm package ด้วย yarn link</div></a></div><div class="load-recent-posts" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.3"><a href="/2017/01/01/react-router-object-create-null/" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.3.0"><div class="load-recent-posts-header" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.3.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2017-01-01-react-router-object-create-null/react_router_v4.png" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.3.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1pqn0az8mb2.0:2.1.0.0.1.1.3.0.1">แกะโค้ด react-router v4 - ตอนที่ 1 Object.create(null)</div></a></div></div></div></div></div></div></div><footer class="footer-template" style="color:#999;font-size:0.75rem;text-align:right;" data-reactid=".1pqn0az8mb2.0:3"></footer><span style="display:block;clear:both;" data-reactid=".1pqn0az8mb2.1"> </span></div></div><script src="/bundle.js"></script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-81455356-1', 'auto');ga('send', 'pageview');</script></script></body></html>

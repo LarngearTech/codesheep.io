@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta name="google-site-verification" content="BDpu467SDH-R3dspBS7Otq9SonfabJLKZxCEALZH4-Q"/><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="แกะโค้ด react-router v4 - ตอนที่ 1 Object.create(null) | CodeSheep Blog"/><meta property="og:type" content="website"/><meta property="og:url" content="http://codesheep.io/2017/01/01/react-router-object-create-null/"/><meta property="og:image" content="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2017-01-01-react-router-object-create-null/react_router_v4.png"/><meta property="og:site_name" content="CodeSheep"/><meta property="og:description" content="วันนี้มาลองเขียนบทความให้สมชื่อ CodeSheep หรือแกะโค้ดกันนะครับ เป็นแนวบทความที่อยากลองนำโค้ดที่อยู่ในโปรเจค Open Source ดังๆ มาแกะดูว่าเค้าใช้เทคนิกอะไรในการเขียนกันบ้าง (อ่านต่อ)"/><meta property="fb:app_id" content="1805086963105739"/><title></title><link rel="shortcut icon"/><link href="//fonts.googleapis.com/css?family=Lora:400,400italic,700|Open+Sans:700" rel="stylesheet" type="text/css"/><style id="typography.js">/*! normalize.css v3.0.2 | MIT License | git.io/normalize */html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+
+html {
+  box-sizing: border-box;
+  font-size: 125%;
+  line-height: 1.5em;
+  overflow-y: scroll;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  color: hsl(0,0%,20%);
+  font-family: Lora;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+/* Make image responsive by default */
+img {
+  max-width: 100%;
+}
+
+h1,h2,h3,h4,h5,h6,hgroup,ul,ol,dl,dd,p,figure,pre,table,fieldset,blockquote,form,noscript,iframe,img,hr {
+margin: 0;
+margin-bottom: 1.5rem;
+padding: 0;
+}
+
+blockquote {
+margin: 1.5rem 3.75rem;
+}
+
+b,strong {
+font-weight: 700
+}
+
+hr {
+background: hsl(0,0%,80%);
+border: none;
+height: 1px;
+margin-bottom: calc(1.5rem - 1px);
+}
+
+ol,ul {
+list-style-position: outside;
+margin-left: 1.5rem;
+}
+
+ul li,ol li {
+padding-left: 0;
+}
+
+code,kbd,pre,samp {
+font-size: 0.85rem;
+line-height: 1.5rem;
+}
+
+table {
+font-size: 1rem;
+line-height: 2.25rem;
+width: 100%;
+}
+
+thead {
+text-align: left;
+}
+
+h1,h2,h3,h4,h5,h6 {
+color: hsl(0,0%,25%);
+font-family: Open Sans;
+font-weight: 700;
+}
+
+h1 {
+font-size: 4.23607rem;
+line-height: 4.5rem;
+}
+
+h2 {
+font-size: 2.61803rem;
+line-height: 3rem;
+}
+
+h3 {
+font-size: 1.61803rem;
+line-height: 2.25rem;
+}
+
+h4 {
+font-size: 1.37824rem;
+line-height: 2.25rem;
+}
+
+h5 {
+font-size: 1.17398rem;
+line-height: 1.5rem;
+}
+
+h6 {
+font-size: 1rem;
+line-height: 1.5rem;
+}
+
+
+</style><link rel="stylesheet" href="/styles.css"/></head><body class="landing-page"><div id="react-mount"><div style="max-width:960px;margin-left:auto;margin-right:auto;padding:3rem 0.75rem;" data-reactid=".26qecvsx0ku" data-react-checksum="1765366819"><div class="headroom-wrapper" data-reactid=".26qecvsx0ku.0:0"><div style="position:relative;top:0;left:0;right:0;z-index:1;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0);" class="headroom headroom--unfixed" data-reactid=".26qecvsx0ku.0:0.0"><div class="nav-top-bar" data-reactid=".26qecvsx0ku.0:0.0.0"><nav class="navbar navbar-default" data-reactid=".26qecvsx0ku.0:0.0.0.0"><div class="container" data-reactid=".26qecvsx0ku.0:0.0.0.0.0"><div class="navbar-header" style="height:70px;" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.0"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.0.0"><span class="sr-only" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.0.0.0">Toggle navigation</span><span class="icon-bar" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.0.0.1"></span><span class="icon-bar" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.0.0.2"></span><span class="icon-bar" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.0.0.3"></span></button><a href="/" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.0.1"><a class="navbar-brand" href="#" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.0.1.0"><img style="height:45px;margin-top:-3px;" src="/images/logo.png" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.0.1.0.0"/></a></a></div><div id="navbar" class="navbar-collapse collapse" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.1"><ul class="nav navbar-nav" data-reactid=".26qecvsx0ku.0:0.0.0.0.0.1.0"></ul></div></div></nav></div></div></div><div class="template-header-blog" data-reactid=".26qecvsx0ku.0:1"></div><div class="md-post" data-reactid=".26qecvsx0ku.0:2"><div class="col-lg-9 col-md-9" data-reactid=".26qecvsx0ku.0:2.0"><div class="markdown" data-reactid=".26qecvsx0ku.0:2.0.0"><h1 data-reactid=".26qecvsx0ku.0:2.0.0.0">แกะโค้ด react-router v4 - ตอนที่ 1 Object.create(null)</h1><em style="display:block;margin-bottom:3rem;" data-reactid=".26qecvsx0ku.0:2.0.0.1"><span data-reactid=".26qecvsx0ku.0:2.0.0.1.0">Posted </span><span data-reactid=".26qecvsx0ku.0:2.0.0.1.1">January 1, 2017</span><span data-reactid=".26qecvsx0ku.0:2.0.0.1.2"> by </span><span data-reactid=".26qecvsx0ku.0:2.0.0.1.3">Supasate Choochaisri</span></em><div data-reactid=".26qecvsx0ku.0:2.0.0.2"><p>วันนี้มาลองเขียนบทความให้สมชื่อ CodeSheep หรือแกะโค้ดกันนะครับ เป็นแนวบทความที่อยากลองนำโค้ดที่อยู่ในโปรเจค Open Source ดังๆ มาแกะดูว่าเค้าใช้เทคนิกอะไรในการเขียนกันบ้าง โดยจะพยายามแยกแต่ละเรื่องในโค้ดเป็น 1 ตอนถ้าสามารถแยกได้นะครับ</p>
+<h2>Project: React Router v4 alt branch</h2>
+<p>โปรเจคที่เรามาแกะกันคือ React Router ถ้าใครใช้ React คงจะรู้จักกันดี แต่ถ้าใครไม่รู้จักก็ไม่เป็นไรครับ เพราะโค้ดส่วนที่จะแกะเป็นความรู้ทั่วไปใช้กับโปรเจคไหนก็ได้ ณ วันที่เขียนอยู่นี้รุ่น stable ยังเป็น v3 ส่วน v4 ยังเป็น alpha อยู่ นอกจากนั้น v4 ยังมี branch คู่ขนานชื่อ <code>v4-alt</code> ซึ่งเป็นการ rewrite v4 ขึ้นมาอีกรอบโดยยังไม่สรุปว่าสุดท้ายแล้วจะใช้ branch ไหน แต่ในโค้ดตัวอย่างที่เราจะแกะวันนี้จะใช้ branch <code>v4-alt</code> กันครับ</p>
+<img src='./v4-alt.png' width="300px"/>
+<p>โดยโค้ดเราจะอ้างอิงจาก <a href="https://github.com/ReactTraining/react-router/tree/f828a0c21f82309bebc55bdd438faaae078cbaf9">commit นี้</a> ซึ่งเป็น commit ล่าสุด ณ วันที่เขียนบทความนี้</p>
+<h2>matchPattern.js</h2>
+<p>ไฟล์ที่เราจะมาแกะกันคือไฟล์ <code>modules/matchPattern.js</code> ซึ่งมีหน้าที่ในการทดสอบว่า URL ที่ router ได้รับนั้นตรงกับ pattern ที่ระบุไว้หรือไม่</p>
+<p>pattern หน้าตาเป็นแนวแบบนี้ครับ</p>
+<ul>
+<li><code>/</code> จะ match กับ root domain</li>
+<li><code>/users</code> จะ match <code>/users</code></li>
+<li><code>/users/:userId</code> จะ match URL param เช่น <code>/users/1</code>, <code>/users/4</code> เป็นต้น</li>
+</ul>
+<p>โดยเราสามารถระบุค่า exact ว่าต้อง match แบบเป๊ะๆหรือไม่นะครับ เช่น pattern <code>/</code> ถ้าเราระบุ exact นั้นตัว URL จะต้องเป็น <code>/</code> เท่านั้น</p>
+<p>แต่ถ้าเราไม่ต้องการแบบ exact แล้วถ้า URL เป็น <code>/users</code> ก็จะถือว่า match กับ pattern ‘/’ เหมือนกันครับ เพราะมี <code>/</code> อยู่ใน URL</p>
+<p>ขอพูดคร่าวๆแค่นี้ ไม่งั้นเดี๋ยวจะกลายเป็นบทความสอนใช้ React Router v4 ไป เอาเป็นว่าลองมาดูโค้ดเต็มๆของไฟล์นี้กันเลยดีกว่าครับ ไฟล์เล็กๆน่ารัก 41 บรรทัด แต่มีจุดที่น่าสนใจหลายที่ (ยังไม่ต้องสนใจโค้ดก็ได้ครับ แค่ยกมาให้ดูหน้าตาคร่าวๆของมันเฉยๆ)</p>
+<p><a href="https://github.com/ReactTraining/react-router/blob/f828a0c21f82309bebc55bdd438faaae078cbaf9/modules/matchPattern.js"><code>/modules/matchPattern.js</code></a></p>
+<pre><code class="language-js"><span class="hljs-keyword">import</span> pathToRegexp <span class="hljs-keyword">from</span> <span class="hljs-string">'path-to-regexp'</span>
+
+<span class="hljs-keyword">const</span> patternCache = <span class="hljs-built_in">Object</span>.create(<span class="hljs-literal">null</span>)
+
+<span class="hljs-keyword">const</span> compilePattern = <span class="hljs-function">(<span class="hljs-params">pattern</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (!patternCache[pattern]) {
+    <span class="hljs-keyword">const</span> keys = []
+    <span class="hljs-keyword">const</span> re = pathToRegexp(pattern, keys)
+    patternCache[pattern] = { re, keys }
+  }
+
+  <span class="hljs-keyword">return</span> patternCache[pattern]
+}
+
+<span class="hljs-keyword">const</span> matchPattern = <span class="hljs-function">(<span class="hljs-params">pattern, exact, pathname</span>) =&gt;</span> {
+  <span class="hljs-keyword">if</span> (!pattern)
+    <span class="hljs-keyword">return</span> { pathname, <span class="hljs-attr">isExact</span>: <span class="hljs-literal">true</span>, <span class="hljs-attr">params</span>: {} }
+
+  <span class="hljs-keyword">const</span> { re, keys } = compilePattern(pattern)
+  <span class="hljs-keyword">const</span> match = re.exec(pathname)
+
+  <span class="hljs-keyword">if</span> (!match)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+
+  <span class="hljs-keyword">const</span> [ path, ...values ] = match
+  <span class="hljs-keyword">const</span> isExact = pathname === path
+
+  <span class="hljs-keyword">if</span> (exact &amp;&amp; !isExact)
+    <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>
+
+  <span class="hljs-keyword">return</span> {
+    isExact,
+    <span class="hljs-attr">pathname</span>: path,
+    <span class="hljs-attr">params</span>: keys.reduce(<span class="hljs-function">(<span class="hljs-params">memo, key, index</span>) =&gt;</span> {
+      memo[key.name] = values[index]
+      <span class="hljs-keyword">return</span> memo
+    }, {})
+  }
+}
+
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> matchPattern
+</code></pre>
+<p>ในตอนนี้เราจะมาดูที่บรรทัดที่ 3 กันครับ</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> patternCache = <span class="hljs-built_in">Object</span>.create(<span class="hljs-literal">null</span>)
+</code></pre>
+<p>ซึ่งตามชื่อเลยคือเป็น cache ของ pattern ถ้ามี pattern นี้อยู่ใน cache แล้วก็ไม่ต้อง process ซ้ำ ตอบกลับจากค่าใน cache ได้ทันที ลองดูตัวอย่างที่เค้าใช้ในฟังก์ชัน <code>compilePattern</code> ก็ได้ครับ</p>
+<p>คำถามคือ ทำไมต้องใช้ <code>const patternCache = Object.create(null)</code> ทำไมไม่ใช้ <code>const patternCache = {}</code> ซึ่งเป็น JavaScript Object ที่ไว้เก็บ key, value ได้เหมือนกัน? ซึ่งเป็นเนื้อหาหลักของ blog ตอนนี้ครับ</p>
+<h2>const patternCache = Object.create(null)</h2>
+<p>ฟังก์ชัน <code>Object.create</code> ใช้ในการสร้าง JavaScript object ใหม่ขึ้น โดยสามารถระบุได้ว่าจะให้ inherit property มาจาก prototype ตัวไหน (prototype คล้ายๆกับ instance ใน OOP)</p>
+<p>ลองดูตัวอย่างนี้</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> a = { <span class="hljs-attr">val</span>: <span class="hljs-number">10</span>, <span class="hljs-attr">chrArr</span>: [<span class="hljs-string">'x'</span>, <span class="hljs-string">'y'</span>] }
+<span class="hljs-keyword">const</span> b = <span class="hljs-built_in">Object</span>.create(a)
+<span class="hljs-built_in">console</span>.log(b.val) <span class="hljs-comment">// 10</span>
+<span class="hljs-built_in">console</span>.log(b.chrArr) <span class="hljs-comment">// ['x', 'y']</span>
+</code></pre>
+<p>จะเห็นว่า <code>b</code> ได้ property ทั้งหมดของ <code>a</code> มาด้วย โดย property ไหนเป็น reference เราก็จะได้ reference ที่ชี้ไปที่เดียวกัน เช่น <code>charArr</code> เป็น reference ก็จะชี้ไปที่ <code>charArr</code> ที่ <code>a</code> ได้สร้างเอาไว้</p>
+<p>ลองทดสอบดูนะจะได้ตามตัวอย่างนี้</p>
+<pre><code class="language-js"><span class="hljs-built_in">console</span>.log(b.chrArr === a.chrArr) <span class="hljs-comment">// true</span>
+b.chrArr[<span class="hljs-number">0</span>] = <span class="hljs-string">'z'</span> <span class="hljs-comment">// เปลี่ยนค่าใน array ที่เป็น reference</span>
+<span class="hljs-built_in">console</span>.log(b.chrArr) <span class="hljs-comment">// ['z', 'y']</span>
+<span class="hljs-built_in">console</span>.log(a.chrArr) <span class="hljs-comment">// ['z', 'y'] ค่าที่ a เปลี่ยนด้วยเพราะชี้ไปที่เดียวกัน</span>
+</code></pre>
+<p>ดังนั้นการที่เราสั่ง <code>Object.create(null)</code> ขึ้นมา โดย inherit property จาก null ซึ่งก็คือไม่มี property ใดๆ ทำให้ได้ JavaScript Object เปล่าๆขึ้นมานั่นเอง</p>
+<pre><code class="language-js"><span class="hljs-keyword">const</span> a = <span class="hljs-built_in">Object</span>.create(<span class="hljs-literal">null</span>)
+<span class="hljs-built_in">console</span>.log(a) <span class="hljs-comment">// ได้ Object {} และไม่มี property ใดๆ</span>
+</code></pre>
+<p>ซึ่งก็เลยนำมาใช้เป็น cache แบบ key-value ที่ไม่มี key ใดๆเป็นค่าเริ่มต้น</p>
+<h2>const patternCache = {}</h2>
+<p>คราวนี้มาดูกันว่า <code>Object.create(null)</code> มันต่างกับ <code>{}</code> ยังไง ลองดูจากผลลัพธ์ของโค้ดนี้กันนะครับ</p>
+<p><img src="./empty_object.png" alt="Empty Object"></p>
+<p>จะเห็นว่าการสร้าง <code>const a = {}</code> จะทำให้ <code>a</code> ได้ inherit property ของ <code>Object.prototype</code> มาด้วย (ลองทดสอบกันเองด้วย <code>console.log(Object.prototype)</code> ดูนะครับ)</p>
+<p>ดังนั้นจริงๆ แล้ว <code>const a = {}</code> นั้นมีค่าเท่ากับ <code>const a = Object.create(Object.prototype)</code> นั่นเอง</p>
+<h2>สรุป</h2>
+<p>ดังนั้นเหตุผลที่เค้าไม่ใช้ <code>const patternCache = {}</code> แต่เลือกใช้ <code>const patternCache = Object.create(null)</code> ก็เพราะว่าเค้าต้องการ cache ที่ไม่มี key ใดๆติดมานั่นเอง (ถ้าสร้างด้วย <code>const patternCache = {}</code> แล้วสั่ง <code>if (patternCache['toString'])</code> จะได้ค่าเป็น <code>true</code> แม้ว่าจะไม่เคย cache ค่านี้มาก่อน)</p>
+<p>เดี๋ยวในตอนต่อไปจะมาแกะโค้ดไฟล์นี้กันต่อนะครับ</p>
+<p>และสุดท้ายนี้ก็ขอสวัสดีปีใหม่ชาวโปรแกรมเมอร์ไทยทุกคนนะครับ</p>
+<p>Happy New Year 2017 :)</p>
+</div><hr style="margin-bottom:3rem;" data-reactid=".26qecvsx0ku.0:2.0.0.3"/><noscript data-reactid=".26qecvsx0ku.0:2.0.0.4"></noscript></div></div><div class="col-lg-3 col-md-3" data-reactid=".26qecvsx0ku.0:2.1"><div class="right-bar-post" data-reactid=".26qecvsx0ku.0:2.1.0"><div class="frame-right-bar-post" data-reactid=".26qecvsx0ku.0:2.1.0.0"><div class="post-right-bar-share" data-reactid=".26qecvsx0ku.0:2.1.0.0.0"><div class="SocialMediaShareButton SocialMediaShareButton--facebook" data-reactid=".26qecvsx0ku.0:2.1.0.0.0.0"><div class="btn-group" style="width:100%;cursor:pointer;" data-reactid=".26qecvsx0ku.0:2.1.0.0.0.0.0"><a class="btn btn-primary disabled" data-reactid=".26qecvsx0ku.0:2.1.0.0.0.0.0.0"><i class="fa fa-facebook" data-reactid=".26qecvsx0ku.0:2.1.0.0.0.0.0.0.0"></i></a><a class="btn btn-primary" data-reactid=".26qecvsx0ku.0:2.1.0.0.0.0.0.1">Share</a></div></div></div><div class="recent-posts" data-reactid=".26qecvsx0ku.0:2.1.0.0.1"><div class="recent-posts-title" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.0"><h3 data-reactid=".26qecvsx0ku.0:2.1.0.0.1.0.0">Recent Posts</h3></div><div class="recent-posts-content" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1"><div class="load-recent-posts" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.0"><a href="/2016/10/26/publish-npm-package/" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.0.0"><div class="load-recent-posts-header" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.0.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-26-publish-npm-package/npmjs.jpg" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.0.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.0.0.1">สร้าง npm package ขึ้น npmjs.com</div></a></div><div class="load-recent-posts" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.1"><a href="/2016/10/29/webpack-for-react1/" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.1.0"><div class="load-recent-posts-header" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.1.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-29-webpack-for-react1/thumbnail.jpg" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.1.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.1.0.1">Webpack for React developer ตอนที่ 1</div></a></div><div class="load-recent-posts" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.2"><a href="/2016/12/10/yarn-link/" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.2.0"><div class="load-recent-posts-header" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.2.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-12-10-yarn-link/yarn.jpg" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.2.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.2.0.1">ทดสอบ local npm package ด้วย yarn link</div></a></div><div class="load-recent-posts" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.3"><a href="/2017/01/01/react-router-object-create-null/" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.3.0"><div class="load-recent-posts-header" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.3.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2017-01-01-react-router-object-create-null/react_router_v4.png" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.3.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".26qecvsx0ku.0:2.1.0.0.1.1.3.0.1">แกะโค้ด react-router v4 - ตอนที่ 1 Object.create(null)</div></a></div></div></div></div></div></div></div><footer class="footer-template" style="color:#999;font-size:0.75rem;text-align:right;" data-reactid=".26qecvsx0ku.0:3"></footer><span style="display:block;clear:both;" data-reactid=".26qecvsx0ku.1"> </span></div></div><script src="/bundle.js"></script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-81455356-1', 'auto');ga('send', 'pageview');</script></script></body></html>

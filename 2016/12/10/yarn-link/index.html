@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta name="google-site-verification" content="BDpu467SDH-R3dspBS7Otq9SonfabJLKZxCEALZH4-Q"/><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="ทดสอบ local npm package ด้วย yarn link | CodeSheep Blog"/><meta property="og:type" content="website"/><meta property="og:url" content="http://codesheep.io/2016/12/10/yarn-link/"/><meta property="og:image" content="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-12-10-yarn-link/yarn.jpg"/><meta property="og:site_name" content="CodeSheep"/><meta property="og:description" content="เคยมั้ยครับที่โปรเจคของเราเรียกใช้ library ของคนอื่นแล้วพบว่ามันมีบั๊กต้องแก้ไข หรือไม่ก็เราอยากจะเพิ่มฟังก์ชันให้มันทำอะไรเพิ่มซักอย่าง เราก็เลย clone repo ของเค้าลงมาบนเครื่อง local แล้วทำการแก้ พอแก้เสร็จก็สงสัยว่าแล้วเราจะทดสอบ library ที่แก้แล้วนั้น กับโปรเจคของเรายังไง? (อ่านต่อ)"/><meta property="fb:app_id" content="1805086963105739"/><title></title><link rel="shortcut icon"/><link href="//fonts.googleapis.com/css?family=Lora:400,400italic,700|Open+Sans:700" rel="stylesheet" type="text/css"/><style id="typography.js">/*! normalize.css v3.0.2 | MIT License | git.io/normalize */html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+
+html {
+  box-sizing: border-box;
+  font-size: 125%;
+  line-height: 1.5em;
+  overflow-y: scroll;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  color: hsl(0,0%,20%);
+  font-family: Lora;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+/* Make image responsive by default */
+img {
+  max-width: 100%;
+}
+
+h1,h2,h3,h4,h5,h6,hgroup,ul,ol,dl,dd,p,figure,pre,table,fieldset,blockquote,form,noscript,iframe,img,hr {
+margin: 0;
+margin-bottom: 1.5rem;
+padding: 0;
+}
+
+blockquote {
+margin: 1.5rem 3.75rem;
+}
+
+b,strong {
+font-weight: 700
+}
+
+hr {
+background: hsl(0,0%,80%);
+border: none;
+height: 1px;
+margin-bottom: calc(1.5rem - 1px);
+}
+
+ol,ul {
+list-style-position: outside;
+margin-left: 1.5rem;
+}
+
+ul li,ol li {
+padding-left: 0;
+}
+
+code,kbd,pre,samp {
+font-size: 0.85rem;
+line-height: 1.5rem;
+}
+
+table {
+font-size: 1rem;
+line-height: 2.25rem;
+width: 100%;
+}
+
+thead {
+text-align: left;
+}
+
+h1,h2,h3,h4,h5,h6 {
+color: hsl(0,0%,25%);
+font-family: Open Sans;
+font-weight: 700;
+}
+
+h1 {
+font-size: 4.23607rem;
+line-height: 4.5rem;
+}
+
+h2 {
+font-size: 2.61803rem;
+line-height: 3rem;
+}
+
+h3 {
+font-size: 1.61803rem;
+line-height: 2.25rem;
+}
+
+h4 {
+font-size: 1.37824rem;
+line-height: 2.25rem;
+}
+
+h5 {
+font-size: 1.17398rem;
+line-height: 1.5rem;
+}
+
+h6 {
+font-size: 1rem;
+line-height: 1.5rem;
+}
+
+
+</style><link rel="stylesheet" href="/styles.css"/></head><body class="landing-page"><div id="react-mount"><div style="max-width:960px;margin-left:auto;margin-right:auto;padding:3rem 0.75rem;" data-reactid=".1nty5p9j53e" data-react-checksum="-1238508936"><div class="headroom-wrapper" data-reactid=".1nty5p9j53e.0:0"><div style="position:relative;top:0;left:0;right:0;z-index:1;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0);" class="headroom headroom--unfixed" data-reactid=".1nty5p9j53e.0:0.0"><div class="nav-top-bar" data-reactid=".1nty5p9j53e.0:0.0.0"><nav class="navbar navbar-default" data-reactid=".1nty5p9j53e.0:0.0.0.0"><div class="container" data-reactid=".1nty5p9j53e.0:0.0.0.0.0"><div class="navbar-header" style="height:70px;" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.0"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.0.0"><span class="sr-only" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.0.0.0">Toggle navigation</span><span class="icon-bar" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.0.0.1"></span><span class="icon-bar" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.0.0.2"></span><span class="icon-bar" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.0.0.3"></span></button><a href="/" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.0.1"><a class="navbar-brand" href="#" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.0.1.0"><img style="height:45px;margin-top:-3px;" src="/images/logo.png" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.0.1.0.0"/></a></a></div><div id="navbar" class="navbar-collapse collapse" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.1"><ul class="nav navbar-nav" data-reactid=".1nty5p9j53e.0:0.0.0.0.0.1.0"></ul></div></div></nav></div></div></div><div class="template-header-blog" data-reactid=".1nty5p9j53e.0:1"></div><div class="md-post" data-reactid=".1nty5p9j53e.0:2"><div class="col-lg-9 col-md-9" data-reactid=".1nty5p9j53e.0:2.0"><div class="markdown" data-reactid=".1nty5p9j53e.0:2.0.0"><h1 data-reactid=".1nty5p9j53e.0:2.0.0.0">ทดสอบ local npm package ด้วย yarn link</h1><em style="display:block;margin-bottom:3rem;" data-reactid=".1nty5p9j53e.0:2.0.0.1"><span data-reactid=".1nty5p9j53e.0:2.0.0.1.0">Posted </span><span data-reactid=".1nty5p9j53e.0:2.0.0.1.1">December 10, 2016</span><span data-reactid=".1nty5p9j53e.0:2.0.0.1.2"> by </span><span data-reactid=".1nty5p9j53e.0:2.0.0.1.3">Supasate Choochaisri</span></em><div data-reactid=".1nty5p9j53e.0:2.0.0.2"><p>เคยมั้ยครับที่โปรเจคของเราเรียกใช้ library ของคนอื่นแล้วพบว่ามันมีบั๊กต้องแก้ไข หรือไม่ก็เราอยากจะเพิ่มฟังก์ชันให้มันทำอะไรเพิ่มซักอย่าง เราก็เลย clone repo ของเค้าลงมาบนเครื่อง local แล้วทำการแก้ พอแก้เสร็จก็สงสัยว่าแล้วเราจะทดสอบ library ที่แก้แล้วนั้น กับโปรเจคของเรายังไง?</p>
+<p>บทความนี้จะแนะนำวิธีหนึ่งที่นิยมใช้กันคือใช้ <code>yarn link</code> (หรือ <code>npm link</code> แต่ถึงตอนนี้ไม่น่าจะมีใครอยากใช้ <code>npm</code> แล้ว)</p>
+<h2>Learn by doing</h2>
+<p>มาเรียนรู้โดยลองทำโปรเจคสั้นๆเล่นกันดูนะครับ โดยเราจะลองทำการเพิ่มฟังก์ชันง่ายๆให้ <a href="https://github.com/lodash/lodash">lodash</a> กัน</p>
+<p>คาดว่าทุกคนคงรู้จัก lodash นะครับ เป็น library สารพัดประโยชน์ แต่มันดันขาดฟังก์ชันนึงไปนั่นคือฟังก์ชัน <strong>fizzbuzz</strong> (เห็นคนชอบสอน TDD ด้วยตัวอย่างนี้สงสัยคงเป็นฟังก์ชันสำคัญแน่ๆ ทำไม lodash ไม่มีให้ใช้นะเลยต้องเพิ่มให้ซะหน่อย :P)</p>
+<blockquote>
+<p><strong>นิยาม:</strong>
+<strong>fizzbuzz</strong> เป็นฟังก์ชันที่รับ array ของตัวเลขเข้ามา และจะแปลงตัวเลขแต่ละตัวใน array ให้เป็น string คำว่า “fizz” ถ้าหาร 3 ลงตัว, เป็นคำว่า “buzz” ถ้าหาร 5 ลงตัว, และเป็นคำว่า “fizzbuzz” ถ้าหารทั้ง 3 และ 5 ลงตัว กรณีนอกเหนือจากนี้ได้เป็น string ของตัวเลขเดิม เช่น <code>_.fizzbuzz([1,2,3,4,5,6,15,20])</code> จะถูกแปลงเป็น <code>['1','2','fizz','4','fuzz','6','fizzbuzz','20']</code> เป็นต้น</p>
+</blockquote>
+<h2>ขั้นที่ 0 โครงสร้างโฟลเดอร์</h2>
+<p>หน้าตาโฟลเดอร์เราเดี๋ยวจะเป็นแบบนี้นะครับ</p>
+<pre><code class="language-javascript">repo <span class="hljs-comment">// โฟลเดอร์สำหรับเก็บโปรเจคต่างๆในเครื่องเรา</span>
+|-- lodash <span class="hljs-comment">// เดี๋ยวเราจะ clone lodash มาไว้ตรงนี้</span>
+|-- <span class="hljs-keyword">try</span>-fizzbuzz-lodash <span class="hljs-comment">// โปรเจคของเราที่จะเรียกใช้ lodash</span>
+</code></pre>
+<h2>ขั้นที่ 1 สร้างโปรเจค</h2>
+<p>ในโฟลเดอร์ <code>try-fizzbuzz-lodash</code> ทำการ init repo ด้วยคำส่ัง
+<code>yarn init</code>
+หลังจากนั้นลองติดตั้ง lodash ปกติก่อนด้วยคำสั่ง
+<code>yarn add lodash</code>
+ก็จะมีโฟลเดอร์ <code>try-fizzbuzz-lodash/node_modules/lodash</code> ขึ้นมาตามปกติให้เรียกใช้ได้</p>
+<p>แล้วเราก็ลองสร้างไฟล์ <code>index.js</code> ขึ้นมาใน <code>try-fizzbuzz-lodash</code> ดังนี้</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">const</span> _ = <span class="hljs-built_in">require</span>(<span class="hljs-string">'lodash'</span>) <span class="hljs-comment">// import lodash เข้ามา</span>
+<span class="hljs-keyword">const</span> nums = _.range(<span class="hljs-number">1</span>, <span class="hljs-number">21</span>) <span class="hljs-comment">// สร้าง array ของตัวเลขตั้งแต่ 1 ถึง 20</span>
+
+<span class="hljs-built_in">console</span>.log(_.fizzbuzz(nums)) <span class="hljs-comment">// แปลง array ให้เป็นค่า fizzbuzz</span>
+</code></pre>
+<p>หลังจากนั้น save ไฟล์แล้วรัน
+<code>node index.js</code></p>
+<p>ก็จะขึ้น error มาว่าตัว lodash ที่เราใช้ไม่มีฟังก์ชัน fizzbuzz</p>
+<pre><code class="language-bash">console.log(_.fizzbuzz(nums))
+              ^
+
+TypeError: _.fizzbuzz is not a <span class="hljs-keyword">function</span>
+    at Object.&lt;anonymous&gt; (/path/to/repo/try-fizzbuzz-lodash/index.js:4:15)
+</code></pre>
+<p>โอเคเป็นไปตามที่คิด เพราะตัวต้นฉบับไม่มีฟังก์ชัน fizzbuzz อยู่</p>
+<h2>ขั้นที่ 2 clone lodash</h2>
+<p>ในโฟลเดอร์  <code>repo</code> สั่ง</p>
+<pre><code class="language-bash">git <span class="hljs-built_in">clone</span> git@github.com:lodash/lodash.git
+</code></pre>
+<p>ก็จะได้โฟลเดอร์ lodash ต้นตำรับมา
+(จริงๆแนะนำว่าให้ fork ไปเป็นของตัวเองก่อน แล้วค่อย clone เผื่ออีกหน่อยอยากส่ง pull request กลับไปหาต้นน้ำ)</p>
+<p>เราจะทำการแก้ไข lodash ในโฟลเดอร์นี้กัน</p>
+<h2>ขั้นที่ 3 yarn link</h2>
+<p>เข้าไปในโฟลเดอร์ <code>repo/lodash</code> แล้วสั่งคำสั่ง</p>
+<pre><code class="language-bash">yarn link
+</code></pre>
+<p>คำสั่งนี้จะทำการ register node module ในโฟลเดอร์ที่สั่งคำสั่งเข้ากับ global registry ของเครื่อง local ที่เราใช้งาน เพื่อให้ project อื่นของเราเรียกใช้งานได้</p>
+<h2>ขั้นที่ 4 yarn link package-name</h2>
+<p>กลับไปที่โฟลเดอร์ <code>repo/try-fizzbuzz-lodash</code> แล้วสั่งคำสั่ง</p>
+<pre><code class="language-bash">yarn link lodash
+</code></pre>
+<p>คราวนี้เราจะทำการ link lodash ไปยังโฟลเดอร์ที่เรา register เอาไว้ในขั้นตอนก่อนหน้า</p>
+<p>ลองตรวจสอบด้วยคำสั่ง <code>ls -l node_modules</code> จะแสดงให้เห็นว่า lodash ของเรากลายเป็น symbolic link ไปที่ yarn global registry ในเครื่องเราแล้ว</p>
+<pre><code class="language-bash">$ ls <span class="hljs-_">-l</span> node_modules
+total 8
+lrwxr-xr-x  1 ping  staff  33 Dec 10 20:44 lodash -&gt; &lt;path&gt;/&lt;to&gt;/.yarn-cache/.link/lodash
+</code></pre>
+<h2>ขั้นที่ 5 แก้ไขโค้ด lodash</h2>
+<p>ที่เลือก lodash มาเพราะว่าการเพิ่มฟังก์ชันให้มันสามารถทำได้ง่ายมากเลย โดยแก้ในไฟล์ <code>repo/lodash/lodash.js</code></p>
+<p>ลองหาบรรทัดนี้</p>
+<pre><code class="language-javascript">lodash.filter = filter;
+lodash.flatMap = flatMap;
+</code></pre>
+<p>แล้วแทรก <code>lodash.fizzbuzz = fizzbuzz;</code> เข้าไป (จริงๆไว้ที่ไหนก็ได้ แบบนี้แค่จะได้เรียงลำดับอักษรเฉยๆ)</p>
+<pre><code class="language-javascript">lodash.filter = filter;
+lodash.fizzbuzz = fizzbuzz;
+lodash.flatMap = flatMap;
+</code></pre>
+<p>คือเป็นการเพิ่ม property ชื่อ fizzbuzz ให้กับ lodash โดยชี้ไปยังฟังก์ชันที่ชื่อ fizzbuzz
+ดังนั้นก็ให้เราเพิ่มฟังก์ชัน fizzbuzz ก็ไปต่อจากฟังก์ชัน filter เลยล่ะกัน</p>
+<pre><code class="language-javascript"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">filter</span>(<span class="hljs-params">collection, predicate</span>) </span>{...}
+
+<span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fizzbuzz</span>(<span class="hljs-params">collection</span>) </span>{
+  <span class="hljs-keyword">return</span> collection.map(<span class="hljs-function"><span class="hljs-params">num</span> =&gt;</span>
+    (num % <span class="hljs-number">3</span> === <span class="hljs-number">0</span> ? <span class="hljs-string">'fizz'</span> : <span class="hljs-string">''</span>) + (num % <span class="hljs-number">5</span> === <span class="hljs-number">0</span> ? <span class="hljs-string">'buzz'</span> : <span class="hljs-string">''</span>)
+    || <span class="hljs-built_in">String</span>(num)
+  )
+}
+</code></pre>
+<p>โค้ดเขียนแบบสนุกๆโดยใช้ trick ของ javascript เล็กน้อย เอาเป็นว่าฟังก์ชันนี้ก็เช็ค fizzbuzz แบบปกตินั่นแหล่ะแล้ว return ค่าเป็น array ที่ element แต่ละตัวถูกแปลงค่าแล้ว (ไม่ขอลงรายละเอียดเพราะไม่ใช่ประเด็นของบทความนี้)</p>
+<p>เมื่อเสร็จแล้วก็ลองไปที่โฟลเดอร์ <code>try-fizzbuzz-lodash</code> แล้วสั่งรัน <code>node index.js</code> อีกรอบนึงดูก็จะเห็นว่าสามารถเรียกใช้ lodash ที่อยู่ในเครื่อง local เราได้แล้ว!!!</p>
+<pre><code class="language-bash">$ node index.js
+[ <span class="hljs-string">'1'</span>,
+  <span class="hljs-string">'2'</span>,
+  <span class="hljs-string">'fizz'</span>,
+  <span class="hljs-string">'4'</span>,
+  <span class="hljs-string">'buzz'</span>,
+  <span class="hljs-string">'fizz'</span>,
+  <span class="hljs-string">'7'</span>,
+  <span class="hljs-string">'8'</span>,
+  <span class="hljs-string">'fizz'</span>,
+  <span class="hljs-string">'buzz'</span>,
+  <span class="hljs-string">'11'</span>,
+  <span class="hljs-string">'fizz'</span>,
+  <span class="hljs-string">'13'</span>,
+  <span class="hljs-string">'14'</span>,
+  <span class="hljs-string">'fizzbuzz'</span>,
+  <span class="hljs-string">'16'</span>,
+  <span class="hljs-string">'17'</span>,
+  <span class="hljs-string">'fizz'</span>,
+  <span class="hljs-string">'19'</span>,
+  <span class="hljs-string">'buzz'</span> ]
+</code></pre>
+<h2>ขั้นที่ 6 เปลี่ยนกลับไปใช้ lodash บน npm</h2>
+<p>สมมติว่าเราอยากกลับเปลี่ยนกลับไปใช้ lodash ดั้งเดิมบน npm เราสามารถยกเลิกการ link lodash บนเครื่อง local ได้โดยให้อยู่ที่โฟลเดอร์ <code>try-fizzbuzz-lodash</code> แล้วสั่ง</p>
+<pre><code class="language-bash">yarn unlink lodash
+</code></pre>
+<p>แล้ว lodash ใน node_modules ของเราก็จะถูกลบไป แล้วให้ติดตั้ง lodash ตัวปกติด้วยคำสั่ง <code>yarn add lodash</code> ตามเดิม</p>
+<p>ถ้าเกิดเราอยากลบ lodash ออกจาก local registry อย่างถาวรไม่ให้ใคร link ถึงได้อีกให้ไปที่โฟลเดอร์ <code>repo/lodash</code> ที่เรา clone มาแล้วสั่งคำสั่ง</p>
+<pre><code class="language-bash">yarn unlink
+</code></pre>
+<p>เป็นอันเสร็จพิธี</p>
+<h2>สรุป</h2>
+<p>คำสั่งที่ใช้ในการ link local package มีดังนี้ครับ</p>
+<ul>
+<li><code>yarn link</code> ใน local package ที่เราจะใช้เพื่อ register กับ local registry</li>
+<li><code>yarn link &lt;package-name&gt;</code> ในโปรเจคที่เราจะเรียกใช้ package ที่เรา link ไว้</li>
+<li><code>yarn unlink &lt;package-name&gt;</code> เพื่อยกเลิกการใช้ตัวที่เรา link ไว้</li>
+<li><code>yarn unlink</code> ใน local package เพื่อ unregister ออกจาก local registry</li>
+</ul>
+<p>ขอให้สนุกกับการเขียนโปรแกรมครับ</p>
+<p>Happy Hacking</p>
+<p>ป.ล. ทิ้งท้ายสำหรับคนที่รอเรียนคอร์ส React กับทางทีม CodeSheep เดือนธันวานี้งานเข้าหนักหน่วง เลยคิดว่าจะเปิดสอนอีกทีเดือนมกราคมนะครับ ใครสนใจติดตามประกาศได้ที่เพจ <a href="https://www.facebook.com/codesheep/">CodeSheep</a> นะครับ</p>
+</div><hr style="margin-bottom:3rem;" data-reactid=".1nty5p9j53e.0:2.0.0.3"/><noscript data-reactid=".1nty5p9j53e.0:2.0.0.4"></noscript></div></div><div class="col-lg-3 col-md-3" data-reactid=".1nty5p9j53e.0:2.1"><div class="right-bar-post" data-reactid=".1nty5p9j53e.0:2.1.0"><div class="frame-right-bar-post" data-reactid=".1nty5p9j53e.0:2.1.0.0"><div class="post-right-bar-share" data-reactid=".1nty5p9j53e.0:2.1.0.0.0"><div class="SocialMediaShareButton SocialMediaShareButton--facebook" data-reactid=".1nty5p9j53e.0:2.1.0.0.0.0"><div class="btn-group" style="width:100%;cursor:pointer;" data-reactid=".1nty5p9j53e.0:2.1.0.0.0.0.0"><a class="btn btn-primary disabled" data-reactid=".1nty5p9j53e.0:2.1.0.0.0.0.0.0"><i class="fa fa-facebook" data-reactid=".1nty5p9j53e.0:2.1.0.0.0.0.0.0.0"></i></a><a class="btn btn-primary" data-reactid=".1nty5p9j53e.0:2.1.0.0.0.0.0.1">Share</a></div></div></div><div class="recent-posts" data-reactid=".1nty5p9j53e.0:2.1.0.0.1"><div class="recent-posts-title" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.0"><h3 data-reactid=".1nty5p9j53e.0:2.1.0.0.1.0.0">Recent Posts</h3></div><div class="recent-posts-content" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1"><div class="load-recent-posts" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.0"><a href="/2016/10/26/publish-npm-package/" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.0.0"><div class="load-recent-posts-header" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.0.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-26-publish-npm-package/npmjs.jpg" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.0.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.0.0.1">สร้าง npm package ขึ้น npmjs.com</div></a></div><div class="load-recent-posts" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.1"><a href="/2016/10/29/webpack-for-react1/" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.1.0"><div class="load-recent-posts-header" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.1.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-29-webpack-for-react1/thumbnail.jpg" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.1.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.1.0.1">Webpack for React developer ตอนที่ 1</div></a></div><div class="load-recent-posts" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.2"><a href="/2016/12/10/yarn-link/" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.2.0"><div class="load-recent-posts-header" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.2.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-12-10-yarn-link/yarn.jpg" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.2.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.2.0.1">ทดสอบ local npm package ด้วย yarn link</div></a></div><div class="load-recent-posts" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.3"><a href="/2017/01/01/react-router-object-create-null/" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.3.0"><div class="load-recent-posts-header" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.3.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2017-01-01-react-router-object-create-null/react_router_v4.png" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.3.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1nty5p9j53e.0:2.1.0.0.1.1.3.0.1">แกะโค้ด react-router v4 - ตอนที่ 1 Object.create(null)</div></a></div></div></div></div></div></div></div><footer class="footer-template" style="color:#999;font-size:0.75rem;text-align:right;" data-reactid=".1nty5p9j53e.0:3"></footer><span style="display:block;clear:both;" data-reactid=".1nty5p9j53e.1"> </span></div></div><script src="/bundle.js"></script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-81455356-1', 'auto');ga('send', 'pageview');</script></script></body></html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+ <html lang="en"><head><meta name="google-site-verification" content="BDpu467SDH-R3dspBS7Otq9SonfabJLKZxCEALZH4-Q"/><meta charset="utf-8"/><meta http-equiv="X-UA-Compatible" content="IE=edge"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><meta property="og:title" content="Webpack for React developer ตอนที่ 1 | CodeSheep Blog"/><meta property="og:type" content="website"/><meta property="og:url" content="http://codesheep.io/2016/10/29/webpack-for-react1/"/><meta property="og:image" content="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-29-webpack-for-react1/thumbnail.jpg"/><meta property="og:site_name" content="CodeSheep"/><meta property="og:description" content="บล๊อก technical blog แรกในชีวิต อยากจะมาแชร์การตั้งค่า webpack ที่ใช้ในการพัฒนา project react ที่ตัวเองใช้อยุ่บ่อยๆ"/><meta property="fb:app_id" content="1805086963105739"/><title></title><link rel="shortcut icon"/><link href="//fonts.googleapis.com/css?family=Lora:400,400italic,700|Open+Sans:700" rel="stylesheet" type="text/css"/><style id="typography.js">/*! normalize.css v3.0.2 | MIT License | git.io/normalize */html{font-family:sans-serif;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}article,aside,details,figcaption,figure,footer,header,hgroup,main,menu,nav,section,summary{display:block}audio,canvas,progress,video{display:inline-block;vertical-align:baseline}audio:not([controls]){display:none;height:0}[hidden],template{display:none}a{background-color:transparent}a:active,a:hover{outline:0}abbr[title]{border-bottom:1px dotted}b,strong{font-weight:700}dfn{font-style:italic}h1{font-size:2em;margin:.67em 0}mark{background:#ff0;color:#000}small{font-size:80%}sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}sup{top:-.5em}sub{bottom:-.25em}img{border:0}svg:not(:root){overflow:hidden}figure{margin:1em 40px}hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}pre{overflow:auto}code,kbd,pre,samp{font-family:monospace,monospace;font-size:1em}button,input,optgroup,select,textarea{color:inherit;font:inherit;margin:0}button{overflow:visible}button,select{text-transform:none}button,html input[type=button],input[type=reset],input[type=submit]{-webkit-appearance:button;cursor:pointer}button[disabled],html input[disabled]{cursor:default}button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}input{line-height:normal}input[type=checkbox],input[type=radio]{box-sizing:border-box;padding:0}input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{height:auto}input[type=search]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}input[type=search]::-webkit-search-cancel-button,input[type=search]::-webkit-search-decoration{-webkit-appearance:none}fieldset{border:1px solid silver;margin:0 2px;padding:.35em .625em .75em}legend{border:0;padding:0}textarea{overflow:auto}optgroup{font-weight:700}table{border-collapse:collapse;border-spacing:0}td,th{padding:0}
+
+html {
+  box-sizing: border-box;
+  font-size: 125%;
+  line-height: 1.5em;
+  overflow-y: scroll;
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+body {
+  color: hsl(0,0%,20%);
+  font-family: Lora;
+  font-weight: 400;
+  word-wrap: break-word;
+}
+
+/* Make image responsive by default */
+img {
+  max-width: 100%;
+}
+
+h1,h2,h3,h4,h5,h6,hgroup,ul,ol,dl,dd,p,figure,pre,table,fieldset,blockquote,form,noscript,iframe,img,hr {
+margin: 0;
+margin-bottom: 1.5rem;
+padding: 0;
+}
+
+blockquote {
+margin: 1.5rem 3.75rem;
+}
+
+b,strong {
+font-weight: 700
+}
+
+hr {
+background: hsl(0,0%,80%);
+border: none;
+height: 1px;
+margin-bottom: calc(1.5rem - 1px);
+}
+
+ol,ul {
+list-style-position: outside;
+margin-left: 1.5rem;
+}
+
+ul li,ol li {
+padding-left: 0;
+}
+
+code,kbd,pre,samp {
+font-size: 0.85rem;
+line-height: 1.5rem;
+}
+
+table {
+font-size: 1rem;
+line-height: 2.25rem;
+width: 100%;
+}
+
+thead {
+text-align: left;
+}
+
+h1,h2,h3,h4,h5,h6 {
+color: hsl(0,0%,25%);
+font-family: Open Sans;
+font-weight: 700;
+}
+
+h1 {
+font-size: 4.23607rem;
+line-height: 4.5rem;
+}
+
+h2 {
+font-size: 2.61803rem;
+line-height: 3rem;
+}
+
+h3 {
+font-size: 1.61803rem;
+line-height: 2.25rem;
+}
+
+h4 {
+font-size: 1.37824rem;
+line-height: 2.25rem;
+}
+
+h5 {
+font-size: 1.17398rem;
+line-height: 1.5rem;
+}
+
+h6 {
+font-size: 1rem;
+line-height: 1.5rem;
+}
+
+
+</style><link rel="stylesheet" href="/styles.css"/></head><body class="landing-page"><div id="react-mount"><div style="max-width:960px;margin-left:auto;margin-right:auto;padding:3rem 0.75rem;" data-reactid=".1xsfy4v8bja" data-react-checksum="-363031533"><div class="headroom-wrapper" data-reactid=".1xsfy4v8bja.0:0"><div style="position:relative;top:0;left:0;right:0;z-index:1;-webkit-transform:translateY(0);-ms-transform:translateY(0);transform:translateY(0);" class="headroom headroom--unfixed" data-reactid=".1xsfy4v8bja.0:0.0"><div class="nav-top-bar" data-reactid=".1xsfy4v8bja.0:0.0.0"><nav class="navbar navbar-default" data-reactid=".1xsfy4v8bja.0:0.0.0.0"><div class="container" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0"><div class="navbar-header" style="height:70px;" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.0"><button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.0.0"><span class="sr-only" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.0.0.0">Toggle navigation</span><span class="icon-bar" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.0.0.1"></span><span class="icon-bar" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.0.0.2"></span><span class="icon-bar" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.0.0.3"></span></button><a href="/" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.0.1"><a class="navbar-brand" href="#" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.0.1.0"><img style="height:45px;margin-top:-3px;" src="/images/logo.png" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.0.1.0.0"/></a></a></div><div id="navbar" class="navbar-collapse collapse" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.1"><ul class="nav navbar-nav" data-reactid=".1xsfy4v8bja.0:0.0.0.0.0.1.0"></ul></div></div></nav></div></div></div><div class="template-header-blog" data-reactid=".1xsfy4v8bja.0:1"></div><div class="md-post" data-reactid=".1xsfy4v8bja.0:2"><div class="col-lg-9 col-md-9" data-reactid=".1xsfy4v8bja.0:2.0"><div class="markdown" data-reactid=".1xsfy4v8bja.0:2.0.0"><h1 data-reactid=".1xsfy4v8bja.0:2.0.0.0">Webpack for React developer ตอนที่ 1</h1><em style="display:block;margin-bottom:3rem;" data-reactid=".1xsfy4v8bja.0:2.0.0.1"><span data-reactid=".1xsfy4v8bja.0:2.0.0.1.0">Posted </span><span data-reactid=".1xsfy4v8bja.0:2.0.0.1.1">October 29, 2016</span><span data-reactid=".1xsfy4v8bja.0:2.0.0.1.2"> by </span><span data-reactid=".1xsfy4v8bja.0:2.0.0.1.3">Arnupharp Viratanapanu</span></em><div data-reactid=".1xsfy4v8bja.0:2.0.0.2"><p>จำได้ว่าเมื่อตอนที่เริ่มหัดเขียน react ใหม่ๆ สิ่งที่เป็นปัญหาอย่างหนึ่งในการหัดเขียนคือการ set environment
+เนื่องด้วย react เอง เป็นคนเพื่อนเยอะ กว่าจะได้เริ่มเขียน Hello, world ได้เล่นเอาต้องไปไล่แนะนำตัวกับ
+เพื่อนมันซะหลายคน เพื่อนตัวนึงที่ใช้เวลาในการทำความเข้าใจเยอะกว่าตัวอื่นเนื่องจากความสามารถมันเยอะคือเจ้า webpack นี่แหละ
+บล๊อกนี้เนื้อหาอาจจะไม่ใหม่มาก(แหงสิมาเขียนเอาจนตอนเค้าจะออก version 2 แล้วนี่) แต่จะพยายามสรุป feature
+ของ webpack ที่คิดว่ามีประโยชน์ในการพัฒนา react project เท่าที่ได้เคยใช้มามาแนะนำกันครับ</p>
+<h2>Webpack นั้นคืออะไรตับไตไส้พุง</h2>
+<p>ใครเคยเขียนเวบในช่วงก่อนหน้านี้มาคงคุ้นเคยกับ code แบบข้างล่างนี้ดี</p>
+<pre><code class="language-html"><span class="hljs-meta">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>jQuery • TodoMVC<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"node_modules/todomvc-common/base.css"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"node_modules/todomvc-app-css/index.css"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">link</span> <span class="hljs-attr">rel</span>=<span class="hljs-string">"stylesheet"</span> <span class="hljs-attr">href</span>=<span class="hljs-string">"css/app.css"</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+    ...
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"node_modules/todomvc-common/base.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"node_modules/jquery/dist/jquery.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"node_modules/handlebars/dist/handlebars.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"node_modules/director/build/director.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"js/app.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<p>จะทำเวบๆนึงก็ต้อง include resource ต่างๆ ไม่ว่าจะเป็น javascript เอย css เอย แถมแต่ละตัวมีหลายไฟล์อีกแน่ะ</p>
+<p>ปัญหาที่เกิดขึ้นอย่างแรกเลยคือไอ้พวก resource ต่างๆเหล่านี้เนี่ย เวลา browser อ่านไปเจอแต่ละตัวก็วิ่งไป server ที่นึง
+เพื่อจะโหลดมา ยิ่งมีเยอะๆแบบนี้ก็วิ่งกันเหนื่อยเลยเวบก็โหลดช้า ยิ่งกว่านั้นยังต้องมาคอยระวังลำดับการ import เข้ามาอีก
+เช่นถ้า handlebars.js ใช้ jquery ก็ต้อง import jquery.js ก่อนถึงจะ import handlebars.js ได้</p>
+<p>webpack ช่วยเราแก้ปัญหาเหล่านี้โดยการสร้าง dependency graph ของ resource ที่ระบบของเราต้องการขึ้นมา แล้ว pack
+resource ต่างๆเหล่านั้นเข้าด้วยกันเป็นไฟล์เดียว (หรืออาจจะหลายไฟล์ก็ได้แล้วแต่ตั้งค่า) โดยเรียงลำดับก่อนหลังให้ด้วยไม่ต้องเรียงเอง!</p>
+<p>เพราะฉะนั้นหลังจากใช้ webpack แล้ว code ข้างบนจะกลายเป็น</p>
+<pre><code class="language-html"><span class="hljs-meta">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>React • TodoMVC<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"react-root"</span> /&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"/bundle.js"</span>&gt;</span><span class="undefined"></span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<p>พูดง่ายๆ import bundle.js ไฟล์เดียวมาหมดทั้ง javascript ทั้งฝูงและ css และ font และก็อื่นๆแล่้วแต่ว่าจะสั่งให้มัน pack อะไร
+โดยกระบวนการ pack เนี่ย webpack ทำผ่านสิ่งที่เรียกว่า loader ซึ่งจริงๆก็เป็น javascript ที่ทำหน้าที่เปลี่ยน file ชนิดต่างๆให้อยู่ใน
+รูปแบบที่เหมาะสมในการ pack นั่นเอง</p>
+<h2>สร้างโปรเจค react</h2>
+<p>เราจะมาลองสร้าง react project แล้ว pack มันด้วย webpack กันดู</p>
+<p>ขั้นแรกสร้าง directory ว่างๆ สำหรับ project ที่เราจะทำการ pack แล้วทำการ <code>npm init</code>
+ใครยังไม่มี <code>npm</code> ไปดาวโหลดน์ <a href="https://nodejs.org/en/">nodejs</a> มาติดตั้งก่อน</p>
+<pre><code class="language-bash">mkdir helloreact
+<span class="hljs-built_in">cd</span> helloreact
+npm init
+</code></pre>
+<p>ไม่ว่าจะเจอคำถามอะไรกด enter รัวๆ เพราะเราจะใช้ค่า default หมด npm จะสร้างไฟล์ package.json ขึ้นมาให้เรา
+ขั้นต่อมาเราต้อง install react และ react-dom เพื่อใช้งาน react</p>
+<pre><code class="language-bash">npm install --save react react-dom
+</code></pre>
+<p>จากนั้นให้สร้างไฟล์ต่างๆตามให้มีโครงสร้างตามนี้</p>
+<pre><code class="language-javascript">helloreact
+|--src
+|  |--index.js
+|  |--Hello.js
+|  |--index.html
+|--webpack.config.js
+|--.babelrc
+|--package.json
+</code></pre>
+<p>เรามาดูภายในไฟล์ดีกว่าเริ่มจาก</p>
+<h3>src/index.html</h3>
+<p>เป็นไฟล์ template ของ index ไฟล์ของเรา โดยหลังจาก webpack สร้างไฟล์ output เสร็จแล้วเราจะสั่งให้มันเพิ่ม
+<code>&lt;script&gt;...&lt;/script&gt;</code> ที่ทำการ import ไฟล์ output เข้ามาใน index file โดยอัตโนมัติ</p>
+<pre><code class="language-html"><span class="hljs-meta">&lt;!doctype html&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">html</span> <span class="hljs-attr">lang</span>=<span class="hljs-string">"en"</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">head</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">meta</span> <span class="hljs-attr">charset</span>=<span class="hljs-string">"utf-8"</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">title</span>&gt;</span>Hello, React<span class="hljs-tag">&lt;/<span class="hljs-name">title</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">head</span>&gt;</span>
+<span class="hljs-tag">&lt;<span class="hljs-name">body</span>&gt;</span>
+  <span class="hljs-tag">&lt;<span class="hljs-name">div</span> <span class="hljs-attr">id</span>=<span class="hljs-string">"react-root"</span> /&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">body</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-name">html</span>&gt;</span>
+</code></pre>
+<h3>src/Hello.js</h3>
+<p>ไฟล์ React Component ของเรา เราจะยังไม่เน้นเรื่องการสร้าง react component ในบทความนี้ แต่จะเห็นได้ว่า
+React Component ที่เราสร้างขึ้นนั้นเป็นเพียง javascript function ธรรมดาที่รับ props เป็น parameter</p>
+<p>ในการเขียนโปรแกรมด้วย React เราจะเน้นการสร้าง reusable Component ขึ้นมาใช้งาน คิดง่ายๆว่า
+เราสามารถสร้าง tag <code>&lt;Hello you=&quot;&quot; me=&quot;&quot; /&gt;</code> ไว้เรียกใช้งานได้ โดย tag นี้จะ render ค่าที่ถูก return โดย
+ฟังก์ชั่นที่เราเขียนขึ้น เราสามารถเรียกใช้ you และ me ได้ผ่าน props</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
+<span class="hljs-keyword">const</span> Hello = <span class="hljs-function">(<span class="hljs-params">props</span>) =&gt;</span> (
+  <span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">h1</span>&gt;</span>Hello {props.you} from {props.me}<span class="hljs-tag">&lt;/<span class="hljs-name">h1</span>&gt;</span></span>
+)
+<span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> Hello
+</code></pre>
+<h3>src/index.js</h3>
+<p>ไฟล์ที่ทำการเรนเดอร์ React component ลงไปที่ <code>&lt;div id=&quot;react-root&quot;&gt;</code> ที่เราเตรียมไว้</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">import</span> React <span class="hljs-keyword">from</span> <span class="hljs-string">'react'</span>
+<span class="hljs-keyword">import</span> ReactDOM <span class="hljs-keyword">from</span> <span class="hljs-string">'react-dom'</span>
+<span class="hljs-keyword">import</span> Hello <span class="hljs-keyword">from</span> <span class="hljs-string">'./Hello'</span>
+
+ReactDOM.render(<span class="xml"><span class="hljs-tag">&lt;<span class="hljs-name">Hello</span> <span class="hljs-attr">you</span>=<span class="hljs-string">"React"</span> <span class="hljs-attr">me</span>=<span class="hljs-string">"jQuery"</span> /&gt;</span>, document.getElementById('react-root'))
+</span></code></pre>
+<h2>แปลงไฟล์ให้ browser เข้าใจก่อนจะ pack</h2>
+<p>babel เป็นเพื่อนซี้อีกคนนึงของ react ทำหน้าที่ในการแปลง javascript เป็น javascript!!!</p>
+<p>อ้าวววววว แล้วจะแปลงไปทำไม!!!</p>
+<p>เรื่องของเรื่องก็คือ javascript เนี่ยมันเปลี่ยนแปลงเร็วมากๆ คนทำ browser เนี่ย
+ตาม support ไม่ทัน ถ้าเราอยากจะเขียนโปรแกรมโดยใช้ feature ใหม่ๆที่ browser ยังไม่ support เราจะต้องแปลงมันก่อน
+เรียกกระบวนการนี้ว่า transpile</p>
+<p>โดยเราจะใช้มันในการแปลง javascript ES2015 และ JSX เป็น javascript ที่ใช้ browser ส่วนใหญ่เข้าใจ</p>
+<h3>ติดตั้ง babel</h3>
+<p>babel แปลงไฟล์โดยใช้สิ่งที่เรียกว่า preset ดังนั้นเราต้องทำการติดตั้ง babel-core ซึ่งทำหน้าที่แปลงไฟล์และ babel-cli
+เพื่อให้สามารถเรียกใช้ babel ได้จาก command line (อันนี้ติดตั้งหรือไม่ก็ได้) พร้อมทั้ง preset ที่เราต้องการใช้งาน</p>
+<pre><code class="language-bash">npm install --save-dev babel-core babel-cli babel-preset-es2015 babel-preset-react
+</code></pre>
+<h3>ตั้งค่า babel ผ่าน .babelrc</h3>
+<p>จากนั้นเราต้องสร้างไฟล์ .babelrc ซึ่งเป็น config ไฟล์ของ babel มีรูปแบบเป็น json เพื่อบอกมันว่าเราต้องการใช้ preset อะไรในการ
+transpile ไฟล์ โดยเราสามารถใส่เป็น array ของชื่อ preset (ปกติจะนำมาจาก babel-preset-* ) ที่ต้องการใช้งานได้เลย</p>
+<h3>.babelrc</h3>
+<pre><code class="language-json">{
+  <span class="hljs-attr">"presets"</span>: [
+    <span class="hljs-string">"react"</span>,
+    <span class="hljs-string">"es2015"</span>
+  ]
+}
+</code></pre>
+<h3>ไป pack กันเลยย</h3>
+<p><img src="/2016/10/29/webpack-for-react1/letspack.jpg" alt="webpack all the things"></p>
+<h3>ติดตั้ง webpack และ loader</h3>
+<p>ติดตั้ง webpack และ loader ที่จำเป็นต้องใช้ โดยในขั้นต้นนี้เราจะใช้เพียง babel-loader ซึ่งเป็น loader ที่จะไปเรียก
+babel ในขั้นที่แล้วที่เราตั้งค่าไว้มาทำการแปลงไฟล์ก่อนจะ pack</p>
+<pre><code class="language-bash">npm install --save-dev webpack babel-loader
+</code></pre>
+<h3>webpack.config.js</h3>
+<p>เช่นเดียวกับ babel ที่ต้องการ .babelrc</p>
+<p>webpack ต้องการ config ไฟล์เหมือนกัน โดย default แล้ว webpack จะอ่าน config จากไฟล์ webpack.config.js
+ซึ่งจะ export object ของ config ออกมาให้ webpack ได้เรียกใช้งาน</p>
+<p>เรามาลองตั้งค่าพื้นฐานกันดูเลย</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">entry</span>: path.resolve(<span class="hljs-string">'./src/index.js'</span>), <span class="hljs-comment">// Absolute path</span>
+  output: {
+    <span class="hljs-attr">filename</span>: <span class="hljs-string">'bundle.js'</span>,
+    <span class="hljs-attr">path</span>: path.resolve(<span class="hljs-string">'./dist'</span>), <span class="hljs-comment">// Absolute path</span>
+    publicPath: <span class="hljs-string">'/dist/'</span>,
+  },
+  ...
+}
+</code></pre>
+<p>อันดับแรกเราต้องทำการตั้งค่า entry point ของโปรแกรมเราก่อน โดย webpack จะเข้าไปที่ไฟล์นี้และอ่านคำสั่ง import เพื่อสร้าง dependency graph ของโปรแกรมเราขึ้นมา</p>
+<p>ในส่วนของ output นั้นเราจะต้อง set parameter 3 ตัวประกอบด้วย</p>
+<ul>
+<li><code>filename</code> - ชื่อของ output file</li>
+<li><code>path</code> - path ที่จะใช้ write output file</li>
+<li><code>publicPath</code> - url ที่ refer ถึง path ของเรา</li>
+</ul>
+<p>ในโปรเจคนี้เราจะ set webroot ให้ชี้ไปที่ helloreact ดังนั้น bundle.js จะถูกเขียนไปที่ helloreact/dist
+และเราจะตั้งค่าให้ webpack ใส่ script เพื่อโหลด /dist/bundle.js ให้เราโดยอัตโนมัติ</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">entry</span>: ...,
+  <span class="hljs-attr">output</span>: {...},
+  <span class="hljs-attr">module</span>: {
+    <span class="hljs-attr">loaders</span>: [
+      {
+        <span class="hljs-attr">test</span>: <span class="hljs-regexp">/\.js$/</span>, <span class="hljs-comment">// Match *.js</span>
+        exclude: <span class="hljs-regexp">/node_modules/</span>, <span class="hljs-comment">// Dont transpile files in node_modules</span>
+        loader: <span class="hljs-string">'babel'</span>, <span class="hljs-comment">// Use babel-loader to transpile</span>
+      },
+    ]
+  },
+}
+</code></pre>
+<p>ตั้งค่าให้ทุกไฟล์ที่ลงท้ายด้วย .js ถูก load ด้วย <code>babel-loader</code> เราสามารถใส่ <code>babel</code> เฉยๆก็ได้ webpack เติม <code>-loader</code> ให้เอง หรือจะใส่เต็มๆก็ได้</p>
+<p>สำหรับการตั้งค่า loader นั้นเราจะใช้ regular expression ในการบอกว่า ไฟล์ extension ไหนจะถูก load ด้วย loader ตัวไหน
+โดยเราสามารถ chain loader ได้ เช่น ให้ไฟล์ sass ไปผ่าน sass-loader ก่อนจึงไปผ่าน css-loader และ style-loader ซึ่งจะได้เห็นตัวอย่างใน blog เรื่องการ pack style file ด้วย webpack</p>
+<h3>ทดลองเรียกใช้งาน webpack</h3>
+<p>ให้ทำการเพิ่ม build script ใน package.json ดังนี้</p>
+<pre><code class="language-json">  "scripts": {
+    "build": "webpack"
+  },
+</code></pre>
+<p>ทดลองรันโดยเรียก <code>npm run build</code> จะพบว่า webpack ได้สร้าง file bundle.js ไว้ใน directory dist</p>
+<pre><code class="language-bash">topscores:helloreact/ (master✗) $ npm run build
+
+&gt; helloreact@1.0.0 build /Users/topscores/Documents/src/helloreact
+&gt; webpack
+
+Hash: 602c7694f5cdf97ce38f
+Version: webpack 1.13.3
+Time: 2552ms
+    Asset    Size  Chunks             Chunk Names
+bundle.js  738 kB       0  [emitted]  main
+    + 173 hidden modules
+topscores:helloreact/ (master✗) $
+</code></pre>
+<h2>สร้าง index.html แบบอัตโนมัติ</h2>
+<p>เราสามารถสร้างไฟล์ index.html และสั่งให้ import ไฟล์ bundle.js เข้าไปใช้งานได้เลย แต่ในการใช้งานระดับสูง
+บางครั้งเราไม่สามารถจะรู้ชื่อไฟล์ได้ล่วงหน้าเช่นในกรณีที่ใช้ hash ของ content เป็นชื่อไฟล์เพื่อให้สะดวกในการทำ caching
+ในกรณีแบบนี้เราสามารถสั่งให้ webpack สร้างไฟล์ index.html พร้อมทั้ง import ไฟล์ output ให้ได้เลยโดยผ่าน plugin ชื่อของ
+<a href="https://github.com/ampedandwired/html-webpack-plugin">html-webpack-plugin</a></p>
+<h3>ติดตั้ง</h3>
+<pre><code class="language-bash">npm install --save-dev html-webpack-plugin
+</code></pre>
+<h3>ตั้งค่าใน webpack.config.js</h3>
+<p>ตั้งให้ใช้ index.html ใน directory src เป็น template
+<a href="https://github.com/ampedandwired/html-webpack-plugin">html-webpack-plugin</a> จะทำการเพิ่ม script เพื่อ import output ไฟล์ลงในไฟล์นี้และเขียนไปที่ output directory</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
+<span class="hljs-keyword">var</span> HtmlWebpackPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'html-webpack-plugin'</span>)
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">entry</span>: ...,
+  <span class="hljs-attr">output</span>: {...},
+  <span class="hljs-attr">module</span>: {...},
+  <span class="hljs-attr">plugins</span>: [
+    <span class="hljs-keyword">new</span> HtmlWebpackPlugin({
+      <span class="hljs-attr">template</span>: <span class="hljs-string">'src/index.html'</span>,
+    }),
+  ],
+}
+</code></pre>
+<p>จากนั้นลองรัน <code>npm run build</code> อีกครั้ง จะพบว่านอกจากไฟล์ bundle.js webpack ยังสร้างไฟล์ index.html ไว้ใน directory dist ด้วย</p>
+<pre><code class="language-bash">topscores:helloreact/ (master✗) $ npm run build
+
+&gt; helloreact@1.0.0 build /Users/topscores/Documents/src/helloreact
+&gt; webpack
+
+Hash: 602c7694f5cdf97ce38f
+Version: webpack 1.13.3
+Time: 3131ms
+     Asset       Size  Chunks             Chunk Names
+ bundle.js     738 kB       0  [emitted]  main
+index.html  214 bytes          [emitted]  
+    + 173 hidden modules
+Child html-webpack-plugin <span class="hljs-keyword">for</span> <span class="hljs-string">"index.html"</span>:
+        + 3 hidden modules
+topscores:helloreact/ (master✗) $
+</code></pre>
+<h2>ติดตั้ง development server</h2>
+<p>webpack มากับ development server ชื่อ <a href="https://github.com/webpack/webpack-dev-server">webpack-dev-server</a> ซึ่ง development server ตัวนี้
+นอกจากจะใช้แทน web server ได้อย่างสะดวกสบายแล้วยังมาพร้อมกับความสามารถอย่าง live reload อีกด้วย</p>
+<p>ในบทความนี้เราจะมาลองติดตั้งและเรียกใช้งาน webpack-dev-server เริ่มจากติดตั้งด้วยคำสั่ง</p>
+<pre><code class="language-bash">npm install --save-dev webpack-dev-server
+</code></pre>
+<p>จากนั้นทำการเพิ่ม config ในไฟล์ webpack.config.js เพื่อใช้ feature live reload โดยใส่ option inline เพื่อบอก webpack-dev-server ให้เพิ่ม
+client script ที่ทำหน้าที่ refresh หน้า web เมื่อมีการแก้ไข code ลงไปใน output ไฟล์ด้วย</p>
+<pre><code class="language-javascript"><span class="hljs-keyword">var</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>)
+<span class="hljs-keyword">var</span> HtmlWebpackPlugin = <span class="hljs-built_in">require</span>(<span class="hljs-string">'html-webpack-plugin'</span>)
+<span class="hljs-built_in">module</span>.exports = {
+  <span class="hljs-attr">entry</span>: ...,
+  <span class="hljs-attr">output</span>: {...},
+  <span class="hljs-attr">module</span>: {...},
+  <span class="hljs-attr">plugins</span>: [...],
+  <span class="hljs-attr">devServer</span>: {
+    <span class="hljs-attr">inline</span>: <span class="hljs-literal">true</span>,
+  },
+}
+</code></pre>
+<p>เพิ่ม npm script</p>
+<pre><code class="language-json">  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server"
+  },
+</code></pre>
+<p>สั่ง <code>npm run dev</code> เพื่อ start development server</p>
+<pre><code class="language-bash">topscores:helloreact/ (master✗) $ npm run dev
+
+&gt; helloreact@1.0.0 dev /Users/topscores/Documents/src/helloreact
+&gt; webpack-dev-server
+
+ http://localhost:8080/webpack-dev-server/
+webpack result is served from /dist/
+content is served from /Users/topscores/Documents/src/helloreact
+Hash: 602c7694f5cdf97ce38f
+Version: webpack 1.13.3
+Time: 4739ms
+</code></pre>
+<p>โดย default webpack-dev-server จะ listen ที่ port 8080 โดยมี directory ที่เรียกใช้งานเป็น webroot
+webpack-dev-server จะทำการอ่านไฟล์ webpack.config.js และทำการสร้าง output ไฟล์ ไว้ใน memory (จะไม่เห็น output ไฟล์ใน directory dist)</p>
+<p>ลองเปิด browser ไปที่ <a href="http://localhost:8080/dist/index.html">http://localhost:8080/dist/index.html</a> ดู จะพบว่าแต่นแต๊นน ได้ Hello, React ขึ้นมาแสดงดังรูป
+<img src="/2016/10/29/webpack-for-react1/helloreact.png" alt="helloreact"></p>
+<p>ทดลองเปลี่ยนแปลง code ใน index.js ให้แสดง you กับ me เป็นคำอื่นแล้ว save จะพบว่า browser จะ refresh หน้าใหม่โดยอัตโนมัติ</p>
+<p>เป็นอย่างไรบ้างครับกับการ setup เบื้องต้นเล่นเอาเหนื่อย เขียนไปเขียนมาชักจะยาวเกินในบทความถัดๆไปจะเจาะลึกลงเรื่องของการใช้ loader ในการ load ไฟล์ ชนิดอื่นๆ และ feature ที่น่าสนใจอย่างเช่นการทำ hot-reload ครับ</p>
+</div><hr style="margin-bottom:3rem;" data-reactid=".1xsfy4v8bja.0:2.0.0.3"/><noscript data-reactid=".1xsfy4v8bja.0:2.0.0.4"></noscript></div></div><div class="col-lg-3 col-md-3" data-reactid=".1xsfy4v8bja.0:2.1"><div class="right-bar-post" data-reactid=".1xsfy4v8bja.0:2.1.0"><div class="frame-right-bar-post" data-reactid=".1xsfy4v8bja.0:2.1.0.0"><div class="post-right-bar-share" data-reactid=".1xsfy4v8bja.0:2.1.0.0.0"><div class="SocialMediaShareButton SocialMediaShareButton--facebook" data-reactid=".1xsfy4v8bja.0:2.1.0.0.0.0"><div class="btn-group" style="width:100%;cursor:pointer;" data-reactid=".1xsfy4v8bja.0:2.1.0.0.0.0.0"><a class="btn btn-primary disabled" data-reactid=".1xsfy4v8bja.0:2.1.0.0.0.0.0.0"><i class="fa fa-facebook" data-reactid=".1xsfy4v8bja.0:2.1.0.0.0.0.0.0.0"></i></a><a class="btn btn-primary" data-reactid=".1xsfy4v8bja.0:2.1.0.0.0.0.0.1">Share</a></div></div></div><div class="recent-posts" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1"><div class="recent-posts-title" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.0"><h3 data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.0.0">Recent Posts</h3></div><div class="recent-posts-content" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1"><div class="load-recent-posts" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.0"><a href="/2016/10/26/publish-npm-package/" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.0.0"><div class="load-recent-posts-header" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.0.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-26-publish-npm-package/npmjs.jpg" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.0.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.0.0.1">สร้าง npm package ขึ้น npmjs.com</div></a></div><div class="load-recent-posts" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.1"><a href="/2016/10/29/webpack-for-react1/" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.1.0"><div class="load-recent-posts-header" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.1.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-10-29-webpack-for-react1/thumbnail.jpg" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.1.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.1.0.1">Webpack for React developer ตอนที่ 1</div></a></div><div class="load-recent-posts" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.2"><a href="/2016/12/10/yarn-link/" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.2.0"><div class="load-recent-posts-header" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.2.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2016-12-10-yarn-link/yarn.jpg" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.2.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.2.0.1">ทดสอบ local npm package ด้วย yarn link</div></a></div><div class="load-recent-posts" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.3"><a href="/2017/01/01/react-router-object-create-null/" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.3.0"><div class="load-recent-posts-header" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.3.0.0"><img src="https://raw.githubusercontent.com/LarngearTech/codesheep.io/master/pages/2017-01-01-react-router-object-create-null/react_router_v4.png" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.3.0.0.0"/></div><div class="load-recent-posts-body" data-reactid=".1xsfy4v8bja.0:2.1.0.0.1.1.3.0.1">แกะโค้ด react-router v4 - ตอนที่ 1 Object.create(null)</div></a></div></div></div></div></div></div></div><footer class="footer-template" style="color:#999;font-size:0.75rem;text-align:right;" data-reactid=".1xsfy4v8bja.0:3"></footer><span style="display:block;clear:both;" data-reactid=".1xsfy4v8bja.1"> </span></div></div><script src="/bundle.js"></script><script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create', 'UA-81455356-1', 'auto');ga('send', 'pageview');</script></script></body></html>
